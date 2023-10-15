@@ -111,25 +111,104 @@ a {
 
 /* ... your code here ... */
 
+header {
+  background: gainsboro;
+  overflow: auto;
+  padding: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+header img {
+  max-width: 5%;
+  max-height: 5%;
+}
 
 /* ### TODO ### Styles for Main Component */
 
 /* ... your code here ... */
 
+main {
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+}
 
 /* ### TODO ### Styles for Tagging component */
 
 /* ... your code here ... */
 
+main .main__tagging {
+  max-width: 250px;
+  margin: 25px;
+}
+
+h2 {
+  padding-top: 50px;
+  padding-bottom: 15px;
+}
+
+input {
+  padding: 5px;
+  margin: 5px;
+  display: block;
+  max-width: 200px;
+}
+
+label {
+  margin: 5px;
+}
+
+legend {
+  margin: 5px;
+}
 
 /* ### TODO ### Styles for Discovery component */
 
 /* ... your code here ... */
 
+main .main__discovery {
+  margin: 25px;
+  max-width: 600px;
+}
+
+div .discovery__taglist {
+  padding-right: 20px;
+  max-width: 220px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  float: left;
+}
+
+div .discovery__taglist li{
+  color: deepskyblue;
+  background-color: gainsboro;
+  list-style-type: none;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+div .discovery__map {
+  max-width: 350px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  float: right;
+}
+
+div .discovery__map img {
+  max-width: 100%;
+  max-height: 100%;
+}
 
 /* ### TODO ### Styles for Footer Component */
 
 /* ... your code here ... */
+
+footer {
+  background: gainsboro;
+  padding: 50px;
+}
 
 
 /* ### TODO ### Media Queries */
