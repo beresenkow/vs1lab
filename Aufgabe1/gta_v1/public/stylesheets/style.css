@@ -130,6 +130,7 @@ header img {
 /* ... your code here ... */
 
 main {
+  margin: auto;
   overflow: auto;
   display: flex;
   flex-direction: row;
@@ -214,3 +215,22 @@ footer {
 /* ### TODO ### Media Queries */
 
 /* ... your code here ... */
+
+@media screen and (max-width: 850px) {
+
+  header {
+    background: tomato;
+  }
+
+  main {
+    flex-direction: column;
+  }
+
+  main .main__tagging {
+    margin: auto;
+  }
+
+  div .discovery__map {
+    float: none;
+  }
+}
