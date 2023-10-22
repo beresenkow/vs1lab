@@ -143,19 +143,84 @@ header {
 
 main {
   background-color: white;
+  max-width: 850px;
+  overflow: auto;
+  margin: auto;
 }
 
 /* ### TODO ### Styles for Tagging component */
 
 /* ... your code here ... */
 
+.main__tagging {
+  max-width: 225px;
+  margin: 25px;
+}
 
+.tagging__fieldset {
+  padding: 10px;
+}
+
+legend {
+  margin: 5px;
+}
+
+input {
+  margin: 5px;
+  padding: 5px;
+  display: block;
+}
+
+input[type=submit] {
+  border: none;
+  width: 165px;
+}
+
+label {
+  margin: 5px;
+}
 
 /* ### TODO ### Styles for Discovery component */
 
 /* ... your code here ... */
 
+.main__discovery{
+  max-width: 625px;
+  margin: 25px;
+}
 
+.discovery__fieldset {
+  padding: 10px;
+}
+
+.discovery__taglist {
+  padding-right: 20px;
+  max-width: 220px;
+  margin-top: 15px;
+  display: block;
+}
+
+.discovery__taglist ul{
+  list-style-type: none;
+}
+
+.discovery__taglist li{
+  background-color: gainsboro;
+  color: deepskyblue;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.discovery__map {
+  max-width: 405px;
+  margin-top: 15px;
+  display: block;
+}
+
+.discovery__map img{
+  max-width: 100%;
+  max-height: 100%;
+}
 
 /* ### TODO ### Styles for Footer Component */
 
@@ -171,7 +236,9 @@ footer {
 
 /* ... your code here ... */
 
-@media screen and (max-width: 850px) {
+/* Meadia Queries being apllied if the screen has less than 700px of width */
+@media screen and (max-width: 700px) {
+  /* Media Queries for the Header */
   .header__image{
     max-width: 10%;
   }
@@ -182,5 +249,29 @@ footer {
 
   .header__navigation {
     font-size: 100%;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .discovery__fieldset {
+    max-width: 200px;
+  }
+
+  .discovery__taglist {
+    max-width: 500px;
+    min-width: 200px;
+    padding: 0px;
+    font-size: 150%;
+  }
+
+  .discovery__map {
+    max-width: 600px;
+  }
+  
+  .discovery__map img{
+    max-width: 150%;
+    max-height: 150%;
   }
 }
