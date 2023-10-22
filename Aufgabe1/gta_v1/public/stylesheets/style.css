@@ -48,6 +48,10 @@ a {
 
 /* ... your code here ... */
 
+body {
+  background-color: gainsboro;
+}
+
 
 /* Grid styles (no changes required) */
 
@@ -112,17 +116,25 @@ a {
 /* ... your code here ... */
 
 header {
-  background: gainsboro;
+  max-width: 850px;
+  min-width: 500px;
+  margin: auto;
   overflow: auto;
   padding: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
-header img {
-  max-width: 5%;
-  max-height: 5%;
+.header__image{
+  max-width: 7.5%;
+  max-height: 7.5%;
+}
+
+.header__title {
+  font-size: 300%;
+}
+
+.header__navigation {
+  font-size: 110%;
+  padding-right: 20px;
 }
 
 /* ### TODO ### Styles for Main Component */
@@ -130,114 +142,45 @@ header img {
 /* ... your code here ... */
 
 main {
-  margin: auto;
-  overflow: auto;
-  display: flex;
-  flex-direction: row;
+  background-color: white;
 }
 
 /* ### TODO ### Styles for Tagging component */
 
 /* ... your code here ... */
 
-main .main__tagging {
-  max-width: 250px;
-  margin: 25px;
-}
 
-h2 {
-  padding-top: 50px;
-  padding-bottom: 15px;
-}
-
-input {
-  padding: 5px;
-  margin: 5px;
-  display: block;
-  max-width: 200px;
-}
-
-label {
-  margin: 5px;
-}
-
-legend {
-  margin: 5px;
-}
 
 /* ### TODO ### Styles for Discovery component */
 
 /* ... your code here ... */
 
-main .main__discovery {
-  margin: 25px;
-  max-width: 600px;
-}
 
-div .discovery__taglist {
-  padding-right: 20px;
-  max-width: 220px;
-  margin-top: 30px;
-  margin-bottom: 50px;
-  float: left;
-}
-
-div .discovery__taglist li{
-  color: deepskyblue;
-  background-color: gainsboro;
-  list-style-type: none;
-  padding: 10px;
-  margin-bottom: 15px;
-}
-
-div .discovery__map {
-  max-width: 350px;
-  margin-top: 30px;
-  margin-bottom: 50px;
-  float: right;
-}
-
-div .discovery__map img {
-  max-width: 100%;
-  max-height: 100%;
-}
 
 /* ### TODO ### Styles for Footer Component */
 
 /* ... your code here ... */
 
 footer {
-  background: gainsboro;
+  max-width: 850px;
+  margin: auto;
   padding: 50px;
 }
-
 
 /* ### TODO ### Media Queries */
 
 /* ... your code here ... */
 
-@media screen and (max-width: 768px) {
-
-  .row {
-    flex-direction: column;
-  }
-  .col-6 {
-      flex-basis: 100%;
+@media screen and (max-width: 850px) {
+  .header__image{
+    max-width: 10%;
   }
 
-  header {
-    background: tomato;
+  .header__title{
+    font-size: 200%;
   }
 
-  main {
-    flex-direction: column;
-  }
-
-  main .main__tagging {
-    margin: auto;
-  }
-
-  div .discovery__map {
-    float: none;
+  .header__navigation {
+    font-size: 100%;
   }
 }
