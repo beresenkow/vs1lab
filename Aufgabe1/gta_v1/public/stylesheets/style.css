@@ -121,6 +121,11 @@ header {
   margin: auto;
   overflow: auto;
   padding: 50px;
+
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .header__image{
@@ -142,10 +147,13 @@ header {
 /* ... your code here ... */
 
 main {
-  background-color: white;
   max-width: 850px;
   overflow: auto;
   margin: auto;
+}
+
+.mian__wrapper {
+  background-color: white;
 }
 
 /* ### TODO ### Styles for Tagging component */
@@ -239,8 +247,20 @@ footer {
 /* Meadia Queries being apllied if the screen has less than 700px of width */
 @media screen and (max-width: 700px) {
   /* Media Queries for the Header */
+  .row {
+    flex-direction: column;
+  }
+
+  header {
+    display: block;
+  }
+
   .header__image{
-    max-width: 10%;
+    max-width: 13%;
+    margin-right: 25px;
+    float: left;
+    position: relative;
+    top: 2px;
   }
 
   .header__title{
@@ -251,8 +271,8 @@ footer {
     font-size: 100%;
   }
 
-  .row {
-    flex-direction: column;
+  main {
+    padding-left: 25px;
   }
 
   .discovery__fieldset {
