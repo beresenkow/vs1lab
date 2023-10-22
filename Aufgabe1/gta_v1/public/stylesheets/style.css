@@ -216,7 +216,14 @@ footer {
 
 /* ... your code here ... */
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 768px) {
+
+  .row {
+    flex-direction: column;
+  }
+  .col-6 {
+      flex-basis: 100%;
+  }
 
   header {
     background: tomato;
