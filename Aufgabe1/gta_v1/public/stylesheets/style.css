@@ -38,6 +38,9 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  /* Apply background color to the entire body */
+  background-color: gainsboro;
 }
 
 a {
@@ -47,10 +50,6 @@ a {
 /* ### TODO ### Styles for other HTML elements */
 
 /* ... your code here ... */
-
-body {
-  background-color: gainsboro;
-}
 
 
 /* Grid styles (no changes required) */
@@ -116,12 +115,14 @@ body {
 /* ... your code here ... */
 
 header {
+  /* Styling for the header-element, size and margin, etc. */
   max-width: 850px;
   min-width: 500px;
   margin: auto;
   overflow: auto;
   padding: 50px;
 
+  /* Own flexbox for the Header -- Important for the correct view with the Meadia Queries */
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -129,15 +130,18 @@ header {
 }
 
 .header__image{
+  /* Size for the icon */
   max-width: 7.5%;
   max-height: 7.5%;
 }
 
 .header__title {
+  /* Bigger font for the header__title */
   font-size: 300%;
 }
 
 .header__navigation {
+  /* Styling for the navigation bar */
   font-size: 110%;
   padding-right: 20px;
 }
@@ -147,12 +151,14 @@ header {
 /* ... your code here ... */
 
 main {
+  /* Sizing and alignment of the main body */
   max-width: 850px;
   overflow: auto;
   margin: auto;
 }
 
 .mian__wrapper {
+  /* Coloring of the main body in its own div */
   background-color: white;
 }
 
@@ -161,10 +167,12 @@ main {
 /* ... your code here ... */
 
 .main__tagging {
+  /* Sizing and alignment of the Tagging-element */
   max-width: 225px;
   margin: 25px;
 }
 
+/* Styling for teh tagging fieldset */
 .tagging__fieldset {
   padding: 10px;
 }
@@ -174,17 +182,20 @@ legend {
 }
 
 input {
+  /* Global sizing of the input-elements */
   margin: 5px;
   padding: 5px;
   display: block;
 }
 
 input[type=submit] {
+  /* Global sizing of the submit-elements */
   border: none;
   width: 165px;
 }
 
 label {
+  /* Global alignment of the labels for the input-elements */
   margin: 5px;
 }
 
@@ -193,15 +204,18 @@ label {
 /* ... your code here ... */
 
 .main__discovery{
+  /* Sizing and alignment of the Discovery-element */
   max-width: 625px;
   margin: 25px;
 }
 
 .discovery__fieldset {
+  /* Alignment of the discoverx fieldset */
   padding: 10px;
 }
 
 .discovery__taglist {
+  /* Sizing and alignment of all the taglist elements */
   padding-right: 20px;
   max-width: 220px;
   margin-top: 15px;
@@ -209,16 +223,19 @@ label {
 }
 
 .discovery__taglist ul{
+  /* Removing of the Dots on the list elements */
   list-style-type: none;
 }
 
 .discovery__taglist li{
+  /* Styling of the taglist list items */
   background-color: gainsboro;
   color: deepskyblue;
   padding: 10px;
   margin-bottom: 15px;
 }
 
+/* Sizing of the map image */
 .discovery__map {
   max-width: 405px;
   margin-top: 15px;
@@ -235,6 +252,7 @@ label {
 /* ... your code here ... */
 
 footer {
+  /* Sizing and alignment of the footer */
   max-width: 850px;
   margin: auto;
   padding: 50px;
@@ -244,18 +262,22 @@ footer {
 
 /* ... your code here ... */
 
-/* Meadia Queries being apllied if the screen has less than 700px of width */
+/* Meadia Queries being apllied if the screen has less than 700px in width */
 @media screen and (max-width: 700px) {
   /* Media Queries for the Header */
   .row {
+    /* Changing the header orientation from row to column */
     flex-direction: column;
   }
 
   header {
+    /* Alignment for the header, to show all elemts in a straight collumn */
     display: block;
   }
 
   .header__image{
+    /* Resizing of the icon for small screens and floating the icon to teh 
+       left of the h1-element and nav-element */
     max-width: 13%;
     margin-right: 25px;
     float: left;
@@ -264,28 +286,33 @@ footer {
   }
 
   .header__title{
+    /* Resizing the h1-title */
     font-size: 200%;
   }
 
   .header__navigation {
+    /* Resizing the nav-text-element */
     font-size: 100%;
   }
 
   main {
+    /* Decreasing of the padding on the main-body */
     padding-left: 25px;
   }
 
   .discovery__fieldset {
+    /* Decreasing the size of the discovery fieldset */
     max-width: 200px;
   }
 
   .discovery__taglist {
+    /* Increasing the size of the taglist elements */
     max-width: 500px;
     min-width: 200px;
-    padding: 0px;
     font-size: 150%;
   }
 
+  /* Increasing the max-size of the map-image */  
   .discovery__map {
     max-width: 600px;
   }

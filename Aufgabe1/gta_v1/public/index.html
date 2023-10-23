@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoTagApp</title>
-    <link rel="stylesheet" href="./stylesheets/style.css" />
+    <link rel="stylesheet" href="./stylesheets/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -23,6 +23,7 @@
         </nav>
     </header>
 
+
     <div class="mian__wrapper">
         <main class="main row">
             <section class="main__tagging tagging col-3">
@@ -36,13 +37,13 @@
                         <legend>Add a new GeoTag</legend>
 
                         <div>
-                            <label for="latitude">Latitude:</label>
-                            <input type="text" id="latitude" name="latitude" placeholder="49.01379" disabled>    
+                            <label for="latitude_tagging">Latitude:</label>
+                            <input type="text" id="latitude_tagging" name="latitude_tagging" placeholder="49.01379" disabled>    
                         </div>
         
                         <div>
-                            <label for="longitude">Longitude:</label>
-                            <input type="text" id="longitude" name="longitude" placeholder="8.390071" disabled>
+                            <label for="longitude_tagging">Longitude:</label>
+                            <input type="text" id="longitude_tagging" name="longitude_tagging" placeholder="8.390071" disabled>
                         </div>
         
                         <div>
@@ -80,8 +81,8 @@
                             <label for="searchterm">Search term or keywords:</label>
                             <input type="text" id="searchterm" name="searchterm" placeholder="e.g. Karlsruhe" required>    
 
-                            <input type="hidden" id="latitude" name="latitude">
-                            <input type="hidden" id="longitude" name="longitude">
+                            <input type="hidden" id="latitude_discovery" name="latitude_discovery">
+                            <input type="hidden" id="longitude_discovery" name="longitude_discovery">
                         </div>
         
                         <div>
@@ -102,12 +103,11 @@
                     </div>
 
                     <div class="discovery__map col-9">
-                        <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" />
+                        <img src="./images/mapview.jpg" alt="a map with locations" id="mapView">
                         <span>Result map</span>
                     </div>
                 </div>
             </section>
-
         </main>
     </div>
 
