@@ -126,13 +126,14 @@ header {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  flex: 1;
+  /* flex: 1; */
+
 }
 
 .header__image{
   /* Size for the icon */
-  max-width: 7.5%;
-  max-height: 7.5%;
+  max-width: 13%;
+  max-height: 13%;
 }
 
 .header__title {
