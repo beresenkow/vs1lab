@@ -194,7 +194,8 @@ input {
 input[type=submit] {
   /* Global sizing of the submit-elements */
   border: none;
-  width: 165px;
+  margin-top: 15px;
+  width: 180px;
 }
 
 label {
