@@ -72,9 +72,11 @@ class MapManager {
      * Name: vs1
      * Lastname: lab
      * Password: 9T$.2aA2D;Hb~!^
+     * 
+     * Consumer Key: FtWHGJMvdole3bKfpGDmCaVTIfY24EJj
      */
 
-    #apiKey = '';
+    #apiKey = 'FtWHGJMvdole3bKfpGDmCaVTIfY24EJj';
 
     /**
      * Create a new MapManager instance.
@@ -93,7 +95,7 @@ class MapManager {
      * @returns {string} URL of generated map
      */
     getMapUrl(latitude, longitude, tags = [], zoom = 10) {
-        if (this.#apiKey === '') {
+        if (this.#apiKey === 'FtWHGJMvdole3bKfpGDmCaVTIfY24EJj') {
             console.log("No API key provided.");
             return "images/mapview.jpg";
         }
