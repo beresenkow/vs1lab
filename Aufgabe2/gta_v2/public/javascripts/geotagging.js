@@ -110,16 +110,8 @@ class MapManager {
     }
 }
 
-/**
- * TODO: 'updateLocation'
- * A function to retrieve the current location and update the page.
- * It is called once the page has been fully loaded.
- */
-// ... your code here ...
 
 function updateLocation() {
-    var currentLocation = new LocationHelper();
-
     LocationHelper.findLocation(function(helper) {
         var taggingLatitudeInput = document.getElementById("latitude_tagging");
         var taggingLongitudeInput = document.getElementById("longitude_tagging");
@@ -133,9 +125,10 @@ function updateLocation() {
         discoveryLongitudeInput.value = helper.longitude;
 
         console.log("Current location of User: Latitude: " + helper.latitude + ", Latitude: " + helper.longitude);
-    });
 
-    
+        var mapManager = new MapManager();
+        mapManager.getMapUrl(helper.latitude, helper.longitude);
+    });
 }
 
 // Wait for the page to fully load its DOM content, then call updateLocation
