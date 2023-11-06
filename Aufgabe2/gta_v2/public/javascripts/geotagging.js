@@ -76,7 +76,7 @@ class MapManager {
      * Consumer Key: FtWHGJMvdole3bKfpGDmCaVTIfY24EJj
      */
 
-    #apiKey = 'FtWHGJMvdole3bKfpGDmCaVTIfY24EJj';
+    #apiKey = '';
 
     /**
      * Create a new MapManager instance.
@@ -95,7 +95,7 @@ class MapManager {
      * @returns {string} URL of generated map
      */
     getMapUrl(latitude, longitude, tags = [], zoom = 10) {
-        if (this.#apiKey === 'FtWHGJMvdole3bKfpGDmCaVTIfY24EJj') {
+        if (this.#apiKey === '') {
             console.log("No API key provided.");
             return "images/mapview.jpg";
         }
@@ -124,10 +124,11 @@ function updateLocation() {
         discoveryLatitudeInput.value = helper.latitude;
         discoveryLongitudeInput.value = helper.longitude;
 
-        console.log("Current location of User: Latitude: " + helper.latitude + ", Latitude: " + helper.longitude);
+        console.log("Current location of User: Latitude: " + helper.latitude + ", Longitude: " + helper.longitude);
 
-        var mapManager = new MapManager();
-        mapManager.getMapUrl(helper.latitude, helper.longitude);
+        var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
+        var mapImage = document.getElementById("mapView");
+        mapImage.src = mapManager.getMapUrl(helper.latitude, helper.longitude, [], 17);
     });
 }
 
