@@ -12,7 +12,29 @@
 class GeoTag {
 
     // TODO: ... your code here ...
+
+    constructor(latitude, longitude, tagName, tagHashtag) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.tagName = tagName;
+        this.tagHashtag = tagHashtag;
+    }
     
+    getLatitude() {
+        return this.latitude;
+    }
+
+    getLongitude() {
+        return this.longitude;
+    }
+
+    getTagName() {
+        return this.tagName;
+    }
+
+    getTagHashtag() {
+        return this.tagHashtag;
+    }
 }
 
 module.exports = GeoTag;
