@@ -61,6 +61,9 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post("/tagging", (req, res) => {
+  res.render("tagging", { taglist: [] })
+})
 
 /**
  * Route '/discovery' for HTTP 'POST' requests.
@@ -79,5 +82,8 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post("discovery", (req, res) => {
+  res.render("discovery", {taglist: [] })
+})
 
 module.exports = router;
