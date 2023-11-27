@@ -62,7 +62,7 @@ router.get('/', (req, res) => {
 
 // TODO: ... your code here ...
 router.post("/tagging", (req, res) => {
-  res.render("tagging", { taglist: [] })
+    res.send('a', {taglist: []})
 })
 
 /**
@@ -82,8 +82,8 @@ router.post("/tagging", (req, res) => {
  */
 
 // TODO: ... your code here ...
-router.post("discovery", (req, res) => {
-  res.render("discovery", {taglist: [] })
+router.get("/discovery", (req, res) => {
+  
 })
 
 module.exports = router;
