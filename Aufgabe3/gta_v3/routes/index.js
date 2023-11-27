@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
   const examples = new GeoTagExamples();
 
   examples.populateTagList();
-  
+
   res.render('index', { taglist: [] })
 });
 
@@ -75,7 +75,7 @@ router.post("/tagging", (req, res) => {
   var hashtag = req.body.hashtag;
   var geoTag = new GeoTag(latitude, longitude, name, hashtag);
   store.addGeoTag(geoTag);
-  res.render('tagging', { geoTag });
+  res.render('tagging', { geoTag, latitude, longitude });
 });
 
 /**
@@ -101,7 +101,7 @@ router.post("/discovery", (req, res) => {
   var searchterm = req.body.searchterm;
 
   var foundGeoTags = store.searchNearbyGeoTags(latitude, longitude, 7, searchterm);
-  res.render('discovery', { foundGeoTags });
+  res.render('discovery', { foundGeoTags, latitude, longitude});
 });
 
 module.exports = router;
