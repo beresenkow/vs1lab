@@ -30,7 +30,10 @@ const GeoTag = require('../models/geotag');
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTagStore = require('../models/geotag-store');
-
+const GeoTag = require('../models/geotag');
+const InMemoryGeoTagStore = require('../models/geotag-store');
+const InMemoryGeoTagStore = require('../models/geotag-store');
+const store = new InMemoryGeoTagStore();
 /**
  * Route '/' for HTTP 'GET' requests.
  * (http://expressjs.com/de/4x/api.html#app.get.method)
@@ -62,8 +65,14 @@ router.get('/', (req, res) => {
 
 // TODO: ... your code here ...
 router.post("/tagging", (req, res) => {
-    res.send('a', {taglist: []})
-})
+  var latitude = req.body.latitude;
+  var longitude = req.body.longitude;
+  var name = req.body.name;
+  var hashtag = req.body.hashtag;
+  var geoTag = new GeoTag(latitude, longitude, name, hashtag);
+  store.addGeoTag(geoTag);
+  res.render('tagging', { geoTag });
+});
 
 /**
  * Route '/discovery' for HTTP 'POST' requests.
@@ -82,8 +91,13 @@ router.post("/tagging", (req, res) => {
  */
 
 // TODO: ... your code here ...
-router.get("/discovery", (req, res) => {
-  
-})
+router.post("/discovery", (req, res) => {
+  var latitude = req.body.latitude;
+  var longitude = req.body.longitude;
+  var searchterm = req.body.searchterm;
+
+  var foundGeoTags = store.searchNearbyGeoTags(latitude, longitude, 7, searchterm);
+  res.render('discovery', { foundGeoTags });
+});
 
 module.exports = router;

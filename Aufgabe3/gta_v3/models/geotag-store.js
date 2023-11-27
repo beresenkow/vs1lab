@@ -41,11 +41,11 @@ class InMemoryGeoTagStore{
         }
     }
 
-    getNearbyGeoTags(location, radius) {
+    getNearbyGeoTags(latitude, longitude, radius) {
         let nearybyGeoTags = [];
         
         for (let i = 0; i < this.geoTags.length; i++) {
-            let distance = Math.sqrt(Math.pow(location.getLongitude() - this.geoTags[i].getLatitude(), 2) + Math.pow(this.geoTags[i].getLongitude() - location.getLatitude(), 2));
+            let distance = Math.sqrt(Math.pow(longitude - this.geoTags[i].getLatitude(), 2) + Math.pow(this.geoTags[i].getLongitude() - latitude, 2));
             if (distance <= radius) {
                 nearybyGeoTags.push(this.geoTags[i]);
             }
@@ -54,8 +54,8 @@ class InMemoryGeoTagStore{
         return nearybyGeoTags;
     }
 
-    searchNearbyGeoTags(location, radius, keyword) {
-        let nearbyGeoTags = this.getNearbyGeoTags(location, radius);
+    searchNearbyGeoTags(latitude, longitude, radius, keyword) {
+        let nearbyGeoTags = this.getNearbyGeoTags(latitude, longitude, radius);
         let foundGeoTags = [];
 
         for(let i = 0; i < nearbyGeoTags.length; i++) {
