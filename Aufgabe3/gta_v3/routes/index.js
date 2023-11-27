@@ -32,7 +32,6 @@ const GeoTag = require('../models/geotag');
 const GeoTagStore = require('../models/geotag-store');
 const GeoTag = require('../models/geotag');
 const InMemoryGeoTagStore = require('../models/geotag-store');
-const InMemoryGeoTagStore = require('../models/geotag-store');
 const store = new InMemoryGeoTagStore();
 /**
  * Route '/' for HTTP 'GET' requests.
@@ -45,6 +44,11 @@ const store = new InMemoryGeoTagStore();
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
+  const GeoTagExamples = require('../models/geotag-examples');
+  const examples = new GeoTagExamples();
+
+  examples.populateTagList();
+  
   res.render('index', { taglist: [] })
 });
 

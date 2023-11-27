@@ -30,15 +30,18 @@ class GeoTagExamples {
             ['Building K', 49.013190, 8.392090, '#campus'],
         ];
     }
+
+    populateTagList() {
+        const geoTagStore = new InMemoryGeoTagStore();
+
+        const tagList = tagList();
+
+        tagList.forEach(tagData => {
+            const geoTag = new GeoTag(tagData[1], tagData[2], tagData[0], tagData[3]);
+            geoTagStore.addGeoTag(geoTag);
+            console.log("Beispieltag hinzugefügt");
+        });
+    }
 }
-
-const geoTagStore = new InMemoryGeoTagStore();
-
-const tagList = GeoTagExamples.tagList;
-
-tagList.forEach(tagData => {
-    const geoTag = new GeoTag(tagData[0], tagData[1], tagData[2], tagData[3]);
-    geoTagStore.addGeoTag(geoTag);
-});
 
 module.exports = GeoTagExamples;
