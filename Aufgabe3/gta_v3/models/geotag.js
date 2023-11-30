@@ -5,7 +5,7 @@
  * Complete all TODOs in the code documentation.
  */
 
-/** * 
+/** 
  * A class representing geotags.
  * GeoTag objects should contain at least all fields of the tagging form.
  */
