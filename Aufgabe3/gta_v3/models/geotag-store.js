@@ -27,46 +27,6 @@ class InMemoryGeoTagStore{
 
     // TODO: ... your code here ...
 
-    geoTags = [];
-
-    addGeoTag(geoTag) {
-        this.geoTags.push(geoTag);
-    }
-
-    removeGeoTag(geoTagName) {
-        for (let i = 0; i < this.geoTags.length; i++) {
-            if (this.geoTags[i].getTagName() === geoTagName) {
-                this.geoTags.splice(i, 1);
-            }
-        }
-    }
-
-    getNearbyGeoTags(latitude, longitude, radius) {
-        let nearybyGeoTags = [];
-        
-        for (let i = 0; i < this.geoTags.length; i++) {
-            let distance = Math.sqrt(Math.pow(longitude - this.geoTags[i].getLatitude(), 2) + Math.pow(this.geoTags[i].getLongitude() - latitude, 2));
-            if (distance <= radius) {
-                nearybyGeoTags.push(this.geoTags[i]);
-            }
-        }
-
-        return nearybyGeoTags;
-    }
-
-    searchNearbyGeoTags(latitude, longitude, radius, keyword) {
-        let nearbyGeoTags = this.getNearbyGeoTags(latitude, longitude, radius);
-        let foundGeoTags = [];
-
-        for(let i = 0; i < nearbyGeoTags.length; i++) {
-            if (nearbyGeoTags[i].getTagName().toLowerCase().includes(keyword.toLowerCase()) || nearbyGeoTags[i].getTagHashtag().toLowerCase().includes(keyword.toLowerCase())) {
-                foundGeoTags.push(nearbyGeoTags[i]);
-            }
-        }
-
-        return foundGeoTags;
-    }
-
 }
 
-module.exports = InMemoryGeoTagStore;
+module.exports = InMemoryGeoTagStore
