@@ -27,6 +27,44 @@ class InMemoryGeoTagStore{
 
     // TODO: ... your code here ...
 
+    _geoTags;
+
+    constructor() {
+        this._geoTags = [];
+    }
+
+    addGeoTag(geoTag) {
+        this._geoTags.push(geoTag);
+    }
+
+    removeGeoTag(name) {
+        this._geoTags = this._geoTags.filter(geoTag => geoTag.getName() !== name);
+    }
+
+    getNearbyGeoTags(latitude, longitude, radius) {
+        let nearybyGeoTags = [];
+        
+        for (let i = 0; i < this.geoTags.length; i++) {
+            let distance = Math.sqrt(Math.pow(longitude - this.geoTags[i].getLatitude(), 2) + Math.pow(this.geoTags[i].getLongitude() - latitude, 2));
+            if (distance <= radius) {
+                nearybyGeoTags.push(this.geoTags[i]);
+            }
+        }
+
+        return nearybyGeoTags;
+    }
+
+    searchNearbyGeoTags(latitude, longitude, radius, keyword) {
+        let nearbyGeoTags = this.getNearbyGeoTags(latitude, longitude, radius);
+        let foundGeoTags = [];
+        for (let i = 0; i < nearbyGeoTags.length; i++) {
+            if (nearbyGeoTags[i].getTagName().toLowerCase().includes(keyword.toLowerCase()) || nearbyGeoTags[i].getTagHashtag().toLowerCase().includes(keyword.toLowerCase())) {
+                foundGeoTags.push(nearbyGeoTags[i]);
+            }
+        }
+
+        return foundGeoTags;
+    }
 }
 
 module.exports = InMemoryGeoTagStore
