@@ -44,10 +44,10 @@ class InMemoryGeoTagStore{
     getNearbyGeoTags(latitude, longitude, radius) {
         let nearybyGeoTags = [];
         
-        for (let i = 0; i < this.geoTags.length; i++) {
-            let distance = Math.sqrt(Math.pow(longitude - this.geoTags[i].getLatitude(), 2) + Math.pow(this.geoTags[i].getLongitude() - latitude, 2));
+        for (let i = 0; i < this._geoTags.length; i++) {
+            let distance = Math.sqrt(Math.pow(longitude - this._geoTags[i].getLatitude(), 2) + Math.pow(this._geoTags[i].getLongitude() - latitude, 2));
             if (distance <= radius) {
-                nearybyGeoTags.push(this.geoTags[i]);
+                nearybyGeoTags.push(this._geoTags[i]);
             }
         }
 
