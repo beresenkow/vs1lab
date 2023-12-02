@@ -1,0 +1,324 @@
+/*
+  File origin: VS1LAB A1b  
+
+  CSS style is BEM. Classes used for CSS, IDs for JavaScript querying (future use).
+  CSS variables used for clarity and themability (e.g. through SSR). 
+  Inherited box sizing used for ease of including 3rd party content-box components.
+*/
+
+/* Global styling */
+
+html {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  /* This approach prevents issues with 3rd party content-box components */
+  box-sizing: inherit;
+}
+
+
+/* Variables (example: see declaration for "a" below) */
+
+:root {
+  --link-color: #00B7FF;
+  --background-color: #efefef;
+  --border-color: #cdcdcd;
+  --gray-color: #666;
+}
+
+
+/* HTML element styles */
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  /* Apply background color to the entire body */
+  background-color: gainsboro;
+}
+
+a {
+  color: var(--link-color);
+}
+
+/* ### TODO ### Styles for other HTML elements */
+
+/* ... your code here ... */
+
+
+/* Grid styles (no changes required) */
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.col-1 {
+  width: calc(8.33% - 1rem);
+}
+
+.col-2 {
+  width: calc(16.66% - 1rem);
+}
+
+.col-3 {
+  width: calc(25% - 1rem);
+}
+
+.col-4 {
+  width: calc(33.33% - 1rem);
+}
+
+.col-5 {
+  width: calc(41.66% - 1rem);
+}
+
+.col-6 {
+  width: calc(50% - 1rem);
+}
+
+.col-7 {
+  width: calc(58.33% - 1rem);
+}
+
+.col-8 {
+  width: calc(66.66% - 1rem);
+}
+
+.col-9 {
+  width: calc(75% - 1rem);
+}
+
+.col-10 {
+  width: calc(83.33% - 1rem);
+}
+
+.col-11 {
+  width: calc(91.66% - 1rem);
+}
+
+.col-12 {
+  width: calc(100% - 1rem);
+}
+
+
+/* ### TODO ### Styles for Header Component */
+
+/* ... your code here ... */
+
+header {
+  /* Styling for the header-element, size and margin, etc. */
+  max-width: 850px;
+  min-width: 500px;
+  margin: auto;
+  overflow: auto;
+  padding: 50px;
+
+  /* Own flexbox for the Header -- Important for the correct view with the Meadia Queries */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__image{
+  /* Size for the icon */
+  max-width: 13%;
+  max-height: 13%;
+}
+
+.header__title {
+  /* Bigger font for the header__title */
+  font-size: 300%;
+}
+
+.header__navigation {
+  /* Styling for the navigation bar */
+  font-size: 110%;
+  padding-right: 20px;
+}
+
+/* ### TODO ### Styles for Main Component */
+
+/* ... your code here ... */
+
+main {
+  /* Sizing and alignment of the main body */
+  max-width: 850px;
+  overflow: auto;
+  margin: auto;
+}
+
+.mian__wrapper {
+  /* Coloring of the main body in its own div */
+  background-color: white;
+}
+
+/* ### TODO ### Styles for Tagging component */
+
+/* ... your code here ... */
+
+.main__tagging {
+  /* Sizing and alignment of the Tagging-element */
+  max-width: 225px;
+  margin: 25px;
+}
+
+/* Styling for teh tagging fieldset */
+.tagging__fieldset {
+  padding: 10px;
+}
+
+legend {
+  margin: 5px;
+}
+
+input {
+  /* Global sizing of the input-elements */
+  margin: 5px;
+  padding: 5px;
+  display: block;
+}
+
+input[type=submit] {
+  /* Global sizing of the submit-elements */
+  border: none;
+  margin-top: 15px;
+  width: 180px;
+}
+
+label {
+  /* Global alignment of the labels for the input-elements */
+  margin: 5px;
+}
+
+/* ### TODO ### Styles for Discovery component */
+
+/* ... your code here ... */
+
+.main__discovery{
+  /* Sizing and alignment of the Discovery-element */
+  max-width: 625px;
+  margin: 25px;
+}
+
+.discovery__fieldset {
+  /* Alignment of the discoverx fieldset */
+  padding: 10px;
+}
+
+.discovery__taglist {
+  /* Sizing and alignment of all the taglist elements */
+  padding-right: 20px;
+  max-width: 220px;
+  margin-top: 15px;
+  display: block;
+}
+
+.discovery__taglist ul{
+  /* Removing of the Dots on the list elements */
+  list-style-type: none;
+}
+
+.discovery__taglist li{
+  /* Styling of the taglist list items */
+  background-color: gainsboro;
+  color: deepskyblue;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+/* Sizing of the map image */
+.discovery__map {
+  max-width: 405px;
+  margin-top: 15px;
+  display: block;
+}
+
+.discovery__map img{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* ### TODO ### Styles for Footer Component */
+
+/* ... your code here ... */
+
+footer {
+  /* Sizing and alignment of the footer */
+  max-width: 850px;
+  margin: auto;
+  padding: 50px;
+}
+
+/* ### TODO ### Media Queries */
+
+/* ... your code here ... */
+
+/* Meadia Queries being apllied if the screen has less than 700px in width */
+@media screen and (max-width: 700px) {
+  /* Media Queries for the Header */
+  .row {
+    /* Changing the header orientation from row to column */
+    flex-direction: column;
+  }
+
+  header {
+    /* Alignment for the header, to show all elemts in a straight collumn */
+    display: block;
+  }
+
+  .header__image{
+    /* Resizing of the icon for small screens and floating the icon to teh 
+       left of the h1-element and nav-element */
+    max-width: 13%;
+    margin-right: 25px;
+    float: left;
+    position: relative;
+    top: 2px;
+  }
+
+  .header__title{
+    /* Resizing the h1-title */
+    font-size: 200%;
+  }
+
+  .header__navigation {
+    /* Resizing the nav-text-element */
+    font-size: 100%;
+  }
+
+  main {
+    /* Decreasing of the padding on the main-body */
+    padding-left: 25px;
+  }
+
+  .discovery__fieldset {
+    /* Decreasing the size of the discovery fieldset */
+    max-width: 200px;
+  }
+
+  .discovery__taglist {
+    /* Increasing the size of the taglist elements */
+    max-width: 500px;
+    min-width: 200px;
+    font-size: 150%;
+  }
+
+  /* Increasing the max-size of the map-image */  
+  .discovery__map {
+    max-width: 600px;
+  }
+  
+  .discovery__map img{
+    max-width: 150%;
+    max-height: 150%;
+  }
+}
