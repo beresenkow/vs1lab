@@ -46,7 +46,8 @@ const examples = new GeoTagExamples();
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  res.render('index', { taglist: GeoTagExamples.populateStore(store) });
+  const { latitude, longitude } = req.query;
+  res.render('index', { taglist: GeoTagExamples.populateStore(store), latitude, longitude });
 });
 
 /**
@@ -74,7 +75,7 @@ router.post('/tagging', (req, res) => {
 
   const tagging = store.getNearbyGeoTags(latitude, longitude, 10);
 
-  res.render('index', { taglist: tagging });
+  res.render('index', { taglist: tagging, latitude, longitude });
 });
 
 /**
@@ -97,9 +98,10 @@ router.post('/tagging', (req, res) => {
 router.post('/discovery', (req, res) => {
   const { latitude, longitude, searchterm } = req.body;
 
+  console.log('POST /discovery route called');
   let discoverGeoTags = store.searchNearbyGeoTags(latitude, longitude, 10, searchterm);
 
-  res.render('index', { taglist: discoverGeoTags });
+  res.render('index', { taglist: discoverGeoTags, latitude, longitude });
 });
 
 module.exports = router;

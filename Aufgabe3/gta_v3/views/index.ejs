@@ -38,10 +38,10 @@
                         <legend>Add a new GeoTag</legend>
 
                             <label for="latitude_tagging">Latitude:</label>
-                            <input type="text" id="latitude_tagging" name="latitude_tagging" placeholder="49.01379" disabled>    
+                            <input type="text" id="latitude_tagging" name="latitude_tagging" value="<%= latitude %>" placeholder="49.01379" disabled>    
         
                             <label for="longitude_tagging">Longitude:</label>
-                            <input type="text" id="longitude_tagging" name="longitude_tagging" placeholder="8.390071" disabled>
+                            <input type="text" id="longitude_tagging" name="longitude_tagging" value="<%= longitude %>" placeholder="8.390071" disabled>
         
                             <label for="name">Name:</label>
                             <input type="text" id="name" name="name" placeholder="e.g. Schloss Karlsruhe" required maxlength="10" pattern="[A-Za-z]+">
@@ -70,8 +70,8 @@
                             <label for="searchterm">Search term or keywords:</label>
                             <input type="text" id="searchterm" name="searchterm" placeholder="e.g. Karlsruhe" required>    
 
-                            <input type="hidden" id="latitude_discovery" name="latitude_discovery">
-                            <input type="hidden" id="longitude_discovery" name="longitude_discovery">
+                            <input type="hidden" id="latitude_discovery" name="latitude_discovery" value="<%= latitude %>">
+                            <input type="hidden" id="longitude_discovery" name="longitude_discovery" value="<%= longitude %>">
                         </div>
         
                         <div>
