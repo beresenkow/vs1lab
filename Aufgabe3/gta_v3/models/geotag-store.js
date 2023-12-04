@@ -42,16 +42,15 @@ class InMemoryGeoTagStore{
     }
 
     getNearbyGeoTags(latitude, longitude, radius) {
-        let nearybyGeoTags = [];
-        
+        let nearbyGeoTags = [];
+    
         for (let i = 0; i < this._geoTags.length; i++) {
-            let distance = Math.sqrt(Math.pow(longitude - this._geoTags[i].getLatitude(), 2) + Math.pow(this._geoTags[i].getLongitude() - latitude, 2));
+            const distance = this.dist(latitude, longitude, this._geoTags[i].getLatitude(), this._geoTags[i].getLongitude());
+
             if (distance <= radius) {
-                nearybyGeoTags.push(this._geoTags[i]);
+                nearbyGeoTags.push(this._geoTags[i]);
             }
         }
-
-        return nearybyGeoTags;
     }
 
     searchNearbyGeoTags(latitude, longitude, radius, keyword) {
@@ -64,6 +63,27 @@ class InMemoryGeoTagStore{
         }
 
         return foundGeoTags;
+    }
+
+    dist(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Earth radius in kilometers
+        const dLat = (lat2 - lat1) * (Math.PI / 180);
+        const dLon = (lon2 - lon1) * (Math.PI / 180);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+        return distance;
+    }  
+
+    getAllGeoTags() {
+        let allGeoTags = [];
+        for (let i = 0; i < this._geoTags.length; i++) {
+            allGeoTags.push(this._geoTags[i]);
+        }
+        return allGeoTags;
     }
 }
 

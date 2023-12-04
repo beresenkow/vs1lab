@@ -34,6 +34,7 @@ class GeoTagExamples {
     static populateStore(geoTagStore) {
         const tags = this.tagList.map(tag => new GeoTag(tag[0], tag[1], tag[2], tag[3]));
         tags.forEach(tag => geoTagStore.addGeoTag(tag));
+        return tags;
     }
 }
 
