@@ -49,14 +49,12 @@ class InMemoryGeoTagStore{
         for (let i = 0; i < this._geoTags.length; i++) {
             const currentTag = this._geoTags[i];
 
-            console.log("Current Tag: " + currentTag.getName() + " lat: " + currentTag.getLatitude() + " long: " + currentTag.getLongitude() + " tag: " + currentTag.getHashtag());
             // Primitive Calculation of the distance.
             // const distance = Math.sqrt(Math.pow(longitude - currentTag.getLatitude(), 2) + 
             //                  Math.pow(currentTag.getLongitude() - latitude, 2));
 
             const distance = this.dist(latitude, longitude, currentTag.getLatitude(), currentTag.getLongitude());
 
-            console.log("Calculated Distance: " + distance);
             if (distance <= radius) {
                 nearbyGeoTags.push(this._geoTags[i]);
             }
