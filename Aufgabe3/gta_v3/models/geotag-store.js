@@ -42,22 +42,42 @@ class InMemoryGeoTagStore{
     }
 
     getNearbyGeoTags(latitude, longitude, radius) {
-        let nearbyGeoTags = [];
-    
-        for (let i = 0; i < this._geoTags.length; i++) {
-            const distance = this.dist(latitude, longitude, this._geoTags[i].getLatitude(), this._geoTags[i].getLongitude());
+        console.log("GetNearbyGeoTags lat: " + latitude + " long: " + longitude + " rad: " + radius);
 
+        let nearbyGeoTags = [];
+
+        for (let i = 0; i < this._geoTags.length; i++) {
+            const currentTag = this._geoTags[i];
+
+            console.log("Current Tag: " + currentTag.getName() + " lat: " + currentTag.getLatitude() + " long: " + currentTag.getLongitude() + " tag: " + currentTag.getHashtag());
+            // Primitive Calculation of the distance.
+            // const distance = Math.sqrt(Math.pow(longitude - currentTag.getLatitude(), 2) + 
+            //                  Math.pow(currentTag.getLongitude() - latitude, 2));
+
+            const distance = this.dist(latitude, longitude, currentTag.getLatitude(), currentTag.getLongitude());
+
+            console.log("Calculated Distance: " + distance);
             if (distance <= radius) {
                 nearbyGeoTags.push(this._geoTags[i]);
             }
         }
+
+        return nearbyGeoTags;
     }
 
     searchNearbyGeoTags(latitude, longitude, radius, keyword) {
+        console.log("SearchNearbyGeoTags lat: " + latitude + " long: " + longitude + " rad: " + radius + " key: " + keyword);
+
         let nearbyGeoTags = this.getNearbyGeoTags(latitude, longitude, radius);
+
         let foundGeoTags = [];
+
         for (let i = 0; i < nearbyGeoTags.length; i++) {
-            if (nearbyGeoTags[i].getTagName().toLowerCase().includes(keyword.toLowerCase()) || nearbyGeoTags[i].getTagHashtag().toLowerCase().includes(keyword.toLowerCase())) {
+            const name = nearbyGeoTags[i].getName();
+            const hashtag = nearbyGeoTags[i].getHashtag();
+
+            if (name !== undefined && name.includes(keyword) ||
+                hashtag !== undefined && hashtag.includes(keyword)) {
                 foundGeoTags.push(nearbyGeoTags[i]);
             }
         }
@@ -66,6 +86,7 @@ class InMemoryGeoTagStore{
     }
 
     dist(lat1, lon1, lat2, lon2) {
+        // Calculaition of the distance concidering the curvature of the earth.
         const R = 6371; // Earth radius in kilometers
         const dLat = (lat2 - lat1) * (Math.PI / 180);
         const dLon = (lon2 - lon1) * (Math.PI / 180);

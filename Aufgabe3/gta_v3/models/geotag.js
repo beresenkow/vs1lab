@@ -30,11 +30,11 @@ class GeoTag {
     }
 
     getLongitude() {
-        this.longitude;
+        return this.longitude;
     }
 
     getHashtag() {
-        this.hashtag;
+        return this.hashtag;
     }
 }
 

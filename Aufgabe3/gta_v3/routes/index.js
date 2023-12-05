@@ -79,7 +79,7 @@ router.post('/tagging', (req, res) => {
   const tagging = store.getNearbyGeoTags(latitude, longitude, 100);
   const allTags = store.getAllGeoTags();
 
-  res.render('index', { taglist: tagging, latitude: latitude, longitude: longitude });
+  res.render('index', { taglist: allTags, latitude: latitude, longitude: longitude });
 });
 
 /**
@@ -100,12 +100,15 @@ router.post('/tagging', (req, res) => {
 
 // TODO: ... your code here ...
 router.post('/discovery', (req, res) => {
-  const { latitude, longitude, searchterm } = req.body;
+  const { latitude_discovery, longitude_discovery, searchterm } = req.body;
+
+  const latitude = parseFloat(latitude_discovery);
+  const longitude = parseFloat(longitude_discovery);
 
   console.log('POST /discovery route called');
   let discoverGeoTags = store.searchNearbyGeoTags(latitude, longitude, 100, searchterm);
 
-  res.render('index', { taglist: discoverGeoTags, latitude, longitude });
+  res.render('index', { taglist: discoverGeoTags, latitude: latitude, longitude: longitude });
 });
 
 module.exports = router;
