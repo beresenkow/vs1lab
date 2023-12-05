@@ -76,10 +76,9 @@ router.post('/tagging', (req, res) => {
   const newGeoTag = new GeoTag(name, latitude, longitude, hashtag);
   store.addGeoTag(newGeoTag);
 
-  const tagging = store.getNearbyGeoTags(latitude, longitude, 100);
-  const allTags = store.getAllGeoTags();
+  const taggingResult = store.getNearbyGeoTags(latitude, longitude, 30);
 
-  res.render('index', { taglist: allTags, latitude: latitude, longitude: longitude });
+  res.render('index', { taglist: taggingResult, latitude: latitude, longitude: longitude });
 });
 
 /**
@@ -106,7 +105,7 @@ router.post('/discovery', (req, res) => {
   const longitude = parseFloat(longitude_discovery);
 
   console.log('POST /discovery route called');
-  let discoverGeoTags = store.searchNearbyGeoTags(latitude, longitude, 100, searchterm);
+  let discoverGeoTags = store.searchNearbyGeoTags(latitude, longitude, 30, searchterm);
 
   res.render('index', { taglist: discoverGeoTags, latitude: latitude, longitude: longitude });
 });
