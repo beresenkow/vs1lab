@@ -57,3 +57,5 @@ class LocationHelper {
         });
     }
 }
+
+export { LocationHelper }; 

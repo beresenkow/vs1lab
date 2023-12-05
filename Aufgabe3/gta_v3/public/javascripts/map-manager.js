@@ -51,3 +51,5 @@ class MapManager {
         return mapQuestUrl;
     }
 }
+
+export { MapManager }; 

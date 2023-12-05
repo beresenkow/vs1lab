@@ -4,10 +4,12 @@
 
 // This script is executed when the browser loads index.html.
 
-function updateLocation() {
-    var locationHelper = new LocationHelper();
+import { LocationHelper } from './location-helper.js';
+import { MapManager } from "./map-manager.js";
 
-    locationHelper.findLocation(function(helper) {
+function updateLocation() {
+
+    LocationHelper.findLocation(function(helper) {
         var taggingLatitudeInput = document.getElementById("latitude_tagging");
         var taggingLongitudeInput = document.getElementById("longitude_tagging");
         var discoveryLatitudeInput = document.getElementById("latitude_discovery");
