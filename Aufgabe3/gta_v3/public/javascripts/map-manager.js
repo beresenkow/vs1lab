@@ -5,6 +5,19 @@
  */
 // eslint-disable-next-line no-unused-vars
 class MapManager {
+    /*
+     * MapQuest Zugangsdaten:
+     * E-Mail: vs1lab@existiert.net
+     * Code: ms_144e7fec4e6d165ba5f3c4668689e7ad74002074@existiert.net
+     * Username: vs1lab_mapquest
+     * Company: vs1lab
+     * Name: vs1
+     * Lastname: lab
+     * Password: 9T$.2aA2D;Hb~!^
+     * 
+     * Consumer Key: FtWHGJMvdole3bKfpGDmCaVTIfY24EJj
+     */
+    
     #apiKey
 
     /**
