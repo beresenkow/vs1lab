@@ -41,7 +41,9 @@ function updateLocation() {
 function drawMap(latitude, longitude) {
     var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
     var mapImage = document.getElementById("mapView");
-    mapImage.src = mapManager.getMapUrl(latitude, longitude, [], 17);
+    const tagsJson = mapImage.getAttribute('data-taglist');
+    const tags = JSON.parse(tagsJson);
+    mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
 }
 
 // Wait for the page to fully load its DOM content, then call updateLocation
