@@ -113,16 +113,28 @@ module.exports = router;
 
 // TODO: ... your code here ...
 
-/*
 router.get('/api/geotags', (req, res) => {
   const { latitude_discovery, longitude_discovery, searchterm } = req.body;
-  var foundGeoTags = [];
-  if (searchterm !== "") {
 
+  let filteredGeoTags = store.getAllGeoTags();
+
+  if (searchterm && searchterm !== "") {
+    filteredGeoTags = filteredGeoTags.filter(
+      geoTag =>
+        geoTag.getName().includes(searchterm) || geoTag.getHashtag().includes(searchterm)
+    );
+  }
+
+  if (latitude_discovery && longitude_discovery) {
+    const latitude = parseFloat(latitude_discovery);
+    const longitude = parseFloat(longitude_discovery);
+
+    filteredGeoTags = filteredGeoTags.filter(
+      geoTag => store.dist(latitude, longitude, geoTag.getLatitude(), geoTag.getLongitude()) <= 30
+    );
   }
   res.json(foundGeoTags);
 }); 
-*/
 
 /**
  * Route '/api/geotags' for HTTP 'POST' requests.

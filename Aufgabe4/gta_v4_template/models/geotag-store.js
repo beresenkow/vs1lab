@@ -48,11 +48,6 @@ class InMemoryGeoTagStore{
 
         for (let i = 0; i < this._geoTags.length; i++) {
             const currentTag = this._geoTags[i];
-
-            // Primitive Calculation of the distance.
-            // const distance = Math.sqrt(Math.pow(longitude - currentTag.getLatitude(), 2) + 
-            //                  Math.pow(currentTag.getLongitude() - latitude, 2));
-
             const distance = this.dist(latitude, longitude, currentTag.getLatitude(), currentTag.getLongitude());
 
             if (distance <= radius) {
@@ -71,14 +66,12 @@ class InMemoryGeoTagStore{
         return foundGeoTags;
     }
 
-    getGeoTagsBySearchterm(searchterm, store) {
+    getGeoTagsBySearchterm(searchterm, store = this._geoTags) {
         console.log("Get Geotags by searchterm: " + searchterm);
 
         let geoTagStore = [];
         if (store !== undefined) {
             geoTagStore = store;
-        } else {
-            geoTagStore = this._geoTags;
         }
         
         let foundGeoTags = [];
