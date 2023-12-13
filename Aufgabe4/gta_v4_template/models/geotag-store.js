@@ -87,6 +87,15 @@ class InMemoryGeoTagStore{
         return foundGeoTags;
     }
 
+    getGeoTagById(id) {
+
+        for (let i = 0; i < this._geoTags.length; i++) {
+            if (this._geoTags[i].getId() === id) {
+                return this._geoTags[i];
+            }
+        }
+    }
+
     dist(lat1, lon1, lat2, lon2) {
         // Calculaition of the distance concidering the curvature of the earth.
         const R = 6371; // Earth radius in kilometers

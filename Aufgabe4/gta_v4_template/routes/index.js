@@ -62,7 +62,6 @@ router.post('/tagging', (req, res) => {
   const latitude = parseFloat(latitude_tagging);
   const longitude = parseFloat(longitude_tagging);
 
-  console.log('POST /tagging route called');
   const newGeoTag = new GeoTag(name, latitude, longitude, hashtag);
   store.addGeoTag(newGeoTag);
 
@@ -89,7 +88,6 @@ router.post('/discovery', (req, res) => {
   const latitude = parseFloat(latitude_discovery);
   const longitude = parseFloat(longitude_discovery);
 
-  console.log('POST /discovery route called');
   let discoverGeoTags = store.searchNearbyGeoTags(latitude, longitude, 30, searchterm);
 
   res.render('index', { taglist: discoverGeoTags, latitude: latitude, longitude: longitude });
@@ -149,6 +147,13 @@ router.get('/api/geotags', (req, res) => {
 
 // TODO: ... your code here ...
 
+router.post('/api/geotags', (req, res) => {
+  const { latitude_discovery, longitude_discovery, searchterm } = req.body;
+  const newGeoTag = new GeoTag(name, latitude, longitude, hashtag);
+  store.addGeoTag(newGeoTag);
+  const location = "/api/geotags/" + newGeoTag.getId();
+  res.location(location).status(201).json(newGeoTag);
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'GET' requests.
