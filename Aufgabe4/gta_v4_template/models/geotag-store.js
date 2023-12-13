@@ -96,6 +96,32 @@ class InMemoryGeoTagStore{
         }
     }
 
+    updateGeoTag(id, name, latitude, longitude, hashtag) {
+        const geoTag = this.getGeoTagById(id);
+    
+        if (geoTag) {
+          geoTag.setName(name);
+          geoTag.setLatitude(latitude);
+          geoTag.setLongitude(longitude);
+          geoTag.setHashtag(hashtag);
+    
+          return geoTag;
+        }
+    
+        return null;
+      }
+    
+      deleteGeoTag(id) {
+        const geoTagIndex = this._geoTags.findIndex(geoTag => geoTag.getId() === id);
+    
+        if (geoTagIndex !== -1) {
+          const deletedGeoTag = this._geoTags.splice(geoTagIndex, 1)[0];
+          return deletedGeoTag;
+        }
+    
+        return null;
+      }
+
     dist(lat1, lon1, lat2, lon2) {
         // Calculaition of the distance concidering the curvature of the earth.
         const R = 6371; // Earth radius in kilometers
