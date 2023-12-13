@@ -67,19 +67,30 @@ class InMemoryGeoTagStore{
         console.log("SearchNearbyGeoTags lat: " + latitude + " long: " + longitude + " rad: " + radius + " key: " + keyword);
 
         let nearbyGeoTags = this.getNearbyGeoTags(latitude, longitude, radius);
+        let foundGeoTags = this.getGeoTagsBySearchterm(keyword, nearbyGeoTags);
+        return foundGeoTags;
+    }
 
-        let foundGeoTags = [];
+    getGeoTagsBySearchterm(searchterm, store) {
+        console.log("Get Geotags by searchterm: " + searchterm);
 
-        for (let i = 0; i < nearbyGeoTags.length; i++) {
-            const name = nearbyGeoTags[i].getName();
-            const hashtag = nearbyGeoTags[i].getHashtag();
-
-            if (name !== undefined && name.includes(keyword) ||
-                hashtag !== undefined && hashtag.includes(keyword)) {
-                foundGeoTags.push(nearbyGeoTags[i]);
-            }
+        let geoTagStore = [];
+        if (store !== undefined) {
+            geoTagStore = store;
+        } else {
+            geoTagStore = this._geoTags;
         }
+        
+        let foundGeoTags = [];
+        for (let i = 0; i < geoTagStore.length; i++) {
+            const name = geoTagStore[i].getName();
+            const hashtag = geoTagStore[i].getHashtag();
 
+            if (name !== undefined && name.includes(searchterm) ||
+                hashtag !== undefined && hashtag.includes(searchterm)) {
+                    foundGeoTags.push(geoTagStore[i]);
+                }
+        }
         return foundGeoTags;
     }
 

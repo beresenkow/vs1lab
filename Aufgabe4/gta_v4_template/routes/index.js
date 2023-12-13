@@ -113,6 +113,16 @@ module.exports = router;
 
 // TODO: ... your code here ...
 
+/*
+router.get('/api/geotags', (req, res) => {
+  const { latitude_discovery, longitude_discovery, searchterm } = req.body;
+  var foundGeoTags = [];
+  if (searchterm !== "") {
+
+  }
+  res.json(foundGeoTags);
+}); 
+*/
 
 /**
  * Route '/api/geotags' for HTTP 'POST' requests.
