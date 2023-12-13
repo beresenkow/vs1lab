@@ -112,7 +112,7 @@ module.exports = router;
 // TODO: ... your code here ...
 
 router.get('/api/geotags', (req, res) => {
-  const { latitude_discovery, longitude_discovery, searchterm } = req.body;
+  const { latitude_discovery, longitude_discovery, searchterm } = req.query;
 
   let filteredGeoTags = store.getAllGeoTags();
 
@@ -131,8 +131,9 @@ router.get('/api/geotags', (req, res) => {
       geoTag => store.dist(latitude, longitude, geoTag.getLatitude(), geoTag.getLongitude()) <= 30
     );
   }
-  res.json(foundGeoTags);
-}); 
+
+  res.json(filteredGeoTags);
+});
 
 /**
  * Route '/api/geotags' for HTTP 'POST' requests.
@@ -148,10 +149,12 @@ router.get('/api/geotags', (req, res) => {
 // TODO: ... your code here ...
 
 router.post('/api/geotags', (req, res) => {
-  const { latitude_discovery, longitude_discovery, searchterm } = req.body;
-  const newGeoTag = new GeoTag(name, latitude, longitude, hashtag);
+  const { name, latitude, longitude, hashtag } = req.body;
+
+  const newGeoTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag);
   store.addGeoTag(newGeoTag);
-  const location = "/api/geotags/" + newGeoTag.getId();
+
+  const location = `/api/geotags/${newGeoTag.getId()}`;
   res.location(location).status(201).json(newGeoTag);
 });
 

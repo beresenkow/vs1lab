@@ -1,0 +1,43 @@
+get http://localhost:3000/api/geotags
+
+###
+
+post http://localhost:3000/api/geotags
+Content-Type: application/json
+
+{
+    "name": "New Place", 
+    "latitude": 40.7128, 
+    "longitude": -74.0060, 
+    "hashtag": "#NewPlace"
+}
+
+###
+
+get http://localhost:3000/api/geotags
+Content-Type: application/json
+
+{
+    "latitude_discovery": 40.7128, 
+    "longitude_discovery": -74.0060, 
+    "searchterm": "New"
+}
+
+###
+
+get http://localhost:3000/api/geotags/bsdj8zw5
+
+###
+
+put http://localhost:3000/api/geotags/bsdj8zw5
+Content-Type: application/json
+
+{
+    "name": "Updated Place", 
+    "latitude": 41.8781, 
+    "longitude": -87.6298, 
+    "hashtag": "#UpdatedPlace"
+}
+
+###
+delete http://localhost:3000/api/geotags/bsdj8zw5

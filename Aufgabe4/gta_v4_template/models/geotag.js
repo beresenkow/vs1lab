@@ -10,6 +10,10 @@
  * GeoTag objects should contain at least all fields of the tagging form.
  */
 class GeoTag {
+
+    generateUniqueId() {
+        return Math.floor(Math.random() * Date.now()).toString(36);
+    }
     
     constructor(name, latitude, longitude, hashtag) {
         // constructor that creates a new GeoTag.
@@ -17,6 +21,7 @@ class GeoTag {
         this.latitude = latitude;
         this.longitude = longitude;
         this.hashtag = hashtag;
+        this.id = this.generateUniqueId(); //Einfechere ID-Übergabe muss implementiert werden!!!
     }
 
     getName() {
@@ -33,6 +38,10 @@ class GeoTag {
 
     getHashtag() {
         return this.hashtag;
+    }
+
+    getId() {
+        return this.id;
     }
 }
 
