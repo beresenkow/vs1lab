@@ -167,6 +167,16 @@ router.post('/api/geotags', (req, res) => {
 
 // TODO: ... your code here ...
 
+router.get('/api/geotags/:id', (req, res) => {
+  const geoTagId = req.params.id;
+  const geoTag = store.getGeoTagById(geoTagId);
+
+  if (geoTag) {
+    res.json(geoTag);
+  } else {
+    res.status(404).json({ error: 'GeoTag not found' });
+  }
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'PUT' requests.
@@ -184,6 +194,18 @@ router.post('/api/geotags', (req, res) => {
 
 // TODO: ... your code here ...
 
+router.put('/api/geotags/:id', (req, res) => {
+  const geoTagId = req.params.id;
+  const { name, latitude, longitude, hashtag } = req.body;
+
+  const updatedGeoTag = store.updateGeoTag(geoTagId, name, parseFloat(latitude), parseFloat(longitude), hashtag);
+
+  if (updatedGeoTag) {
+    res.json(updatedGeoTag);
+  } else {
+    res.status(404).json({ error: 'GeoTag not found' });
+  }
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'DELETE' requests.
@@ -197,6 +219,17 @@ router.post('/api/geotags', (req, res) => {
  */
 
 // TODO: ... your code here ...
+
+router.delete('/api/geotags/:id', (req, res) => {
+  const geoTagId = req.params.id;
+  const deletedGeoTag = store.deleteGeoTag(geoTagId);
+
+  if (deletedGeoTag) {
+    res.json(deletedGeoTag);
+  } else {
+    res.status(404).json({ error: 'GeoTag not found' });
+  }
+});
 
 module.exports = router;
 
