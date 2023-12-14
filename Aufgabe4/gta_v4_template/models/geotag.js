@@ -28,20 +28,40 @@ class GeoTag {
         return this.name;
     }
 
+    setName(name) {
+        this.name = name;
+    }
+
     getLatitude() {
         return this.latitude;
+    }
+
+    setLatitude(latitude) {
+        this.latitude = latitude;
     }
 
     getLongitude() {
         return this.longitude;
     }
 
+    setLongitude(longitude) {
+        this.longitude = longitude;
+    }
+
     getHashtag() {
         return this.hashtag;
     }
 
+    setHashtag(hashtag) {
+        this.hashtag = hashtag;
+    }
+
     getId() {
         return this.id;
+    }
+
+    setId(id) {
+        this.id = id;
     }
 }
 

@@ -25,11 +25,11 @@ Content-Type: application/json
 
 ###
 
-get http://localhost:3000/api/geotags/bsdj8zw5
+get http://localhost:3000/api/geotags/k4io2wpa
 
 ###
 
-put http://localhost:3000/api/geotags/bsdj8zw5
+put http://localhost:3000/api/geotags/k4io2wpa
 Content-Type: application/json
 
 {
@@ -40,4 +40,4 @@ Content-Type: application/json
 }
 
 ###
-delete http://localhost:3000/api/geotags/bsdj8zw5
+delete http://localhost:3000/api/geotags/k4io2wpa
