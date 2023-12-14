@@ -5,7 +5,7 @@ get http://localhost:3000/api/geotags
 post http://localhost:3000/api/geotags
 Content-Type: application/json
 
-{
+{ 
     "name": "New Place", 
     "latitude": 40.7128, 
     "longitude": -74.0060,
