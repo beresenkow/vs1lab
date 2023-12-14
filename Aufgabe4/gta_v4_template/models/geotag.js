@@ -11,17 +11,12 @@
  */
 class GeoTag {
 
-    generateUniqueId() {
-        return Math.floor(Math.random() * Date.now()).toString(36);
-    }
-    
     constructor(name, latitude, longitude, hashtag) {
         // constructor that creates a new GeoTag.
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.hashtag = hashtag;
-        this.id = this.generateUniqueId(); //Einfechere ID-Übergabe muss implementiert werden!!!
     }
 
     getName() {

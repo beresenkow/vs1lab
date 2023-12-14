@@ -87,10 +87,14 @@ class InMemoryGeoTagStore{
         return foundGeoTags;
     }
 
-    // Es muss noch eine verinfachte ID-Vergabe implementiert werden
-    // Sprich: for-Schleife, die über alle tags iteriert, falls noch keine 
-    // ID da ist, wird dem tag die nächset ID geegeben.
-    // Dementsprechend muss die testREST.http verändert werden.
+    generateFreshIds() {
+        for (let i = 0; i < this._geoTags.length; i++) {
+            if (this._geoTags[i].getId() === undefined ||
+                this._geoTags[i].getId() !== i) {
+                this._geoTags[i].setId(i);
+            }
+        }
+    }
 
     getGeoTagById(id) {
 

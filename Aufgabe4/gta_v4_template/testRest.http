@@ -8,7 +8,7 @@ Content-Type: application/json
 {
     "name": "New Place", 
     "latitude": 40.7128, 
-    "longitude": -74.0060, 
+    "longitude": -74.0060,
     "hashtag": "#NewPlace"
 }
 
@@ -25,11 +25,11 @@ Content-Type: application/json
 
 ###
 
-get http://localhost:3000/api/geotags/k4io2wpa
+get http://localhost:3000/api/geotags/12
 
 ###
 
-put http://localhost:3000/api/geotags/k4io2wpa
+put http://localhost:3000/api/geotags/12
 Content-Type: application/json
 
 {
@@ -40,4 +40,4 @@ Content-Type: application/json
 }
 
 ###
-delete http://localhost:3000/api/geotags/k4io2wpa
+delete http://localhost:3000/api/geotags/12

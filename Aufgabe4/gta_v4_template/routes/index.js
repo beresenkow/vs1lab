@@ -44,7 +44,9 @@ const examples = new GeoTagExamples();
 
 router.get('/', (req, res) => {
   const { latitude, longitude } = req.query;
-  res.render('index', { taglist: GeoTagExamples.populateStore(store), latitude, longitude });
+  const newTaglist = GeoTagExamples.populateStore(store);
+  store.generateFreshIds();
+  res.render('index', { taglist: newTaglist, latitude, longitude });
 });
 
 /**
@@ -62,9 +64,10 @@ router.post('/tagging', (req, res) => {
   const latitude = parseFloat(latitude_tagging);
   const longitude = parseFloat(longitude_tagging);
 
+
   const newGeoTag = new GeoTag(name, latitude, longitude, hashtag);
   store.addGeoTag(newGeoTag);
-
+  store.generateFreshIds();
   const taggingResult = store.getNearbyGeoTags(latitude, longitude, 30);
 
   res.render('index', { taglist: taggingResult, latitude: latitude, longitude: longitude });
@@ -153,6 +156,7 @@ router.post('/api/geotags', (req, res) => {
 
   const newGeoTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag);
   store.addGeoTag(newGeoTag);
+  store.generateFreshIds();
 
   const location = `/api/geotags/${newGeoTag.getId()}`;
   res.location(location).status(201).json(newGeoTag);
@@ -172,7 +176,7 @@ router.post('/api/geotags', (req, res) => {
 
 router.get('/api/geotags/:id', (req, res) => {
   const geoTagId = req.params.id;
-  const geoTag = store.getGeoTagById(geoTagId);
+  const geoTag = store.getGeoTagById(parseInt(geoTagId));
 
   if (geoTag) {
     res.json(geoTag);
@@ -201,7 +205,7 @@ router.put('/api/geotags/:id', (req, res) => {
   const geoTagId = req.params.id;
   const { name, latitude, longitude, hashtag } = req.body;
 
-  const updatedGeoTag = store.updateGeoTag(geoTagId, name, parseFloat(latitude), parseFloat(longitude), hashtag);
+  const updatedGeoTag = store.updateGeoTag(parseInt(geoTagId), name, parseFloat(latitude), parseFloat(longitude), hashtag);
 
   if (updatedGeoTag) {
     res.json(updatedGeoTag);
@@ -225,8 +229,8 @@ router.put('/api/geotags/:id', (req, res) => {
 
 router.delete('/api/geotags/:id', (req, res) => {
   const geoTagId = req.params.id;
-  const deletedGeoTag = store.deleteGeoTag(geoTagId);
-
+  const deletedGeoTag = store.deleteGeoTag(parseInt(geoTagId));
+  store.generateFreshIds();
   if (deletedGeoTag) {
     res.json(deletedGeoTag);
   } else {
