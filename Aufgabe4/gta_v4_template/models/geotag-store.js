@@ -1,47 +1,27 @@
 // File origin: VS1LAB A3
 
-/**
- * This script is a template for exercise VS1lab/Aufgabe3
- * Complete all TODOs in the code documentation.
- */
-
-/**
- * A class for in-memory-storage of geotags
- * 
- * Use an array to store a multiset of geotags.
- * - The array must not be accessible from outside the store.
- * 
- * Provide a method 'addGeoTag' to add a geotag to the store.
- * 
- * Provide a method 'removeGeoTag' to delete geo-tags from the store by name.
- * 
- * Provide a method 'getNearbyGeoTags' that returns all geotags in the proximity of a location.
- * - The location is given as a parameter.
- * - The proximity is computed by means of a radius around the location.
- * 
- * Provide a method 'searchNearbyGeoTags' that returns all geotags in the proximity of a location that match a keyword.
- * - The proximity constrained is the same as for 'getNearbyGeoTags'.
- * - Keyword matching should include partial matches from name or hashtag fields. 
- */
 class InMemoryGeoTagStore{
+    // A class for in-memory-storage of GeoTags.
 
-    // TODO: ... your code here ...
-
-    _geoTags;
+    _geoTags;   // private store for all GeoTags.
 
     constructor() {
+        // constructor for the creation of a new GeoTagStore.
         this._geoTags = [];
     }
 
     addGeoTag(geoTag) {
+        // Method for adding a new GeoTag to the store.
         this._geoTags.push(geoTag);
     }
 
     removeGeoTag(name) {
+        // Method for removing of a existing GeoTag from the store by name.
         this._geoTags = this._geoTags.filter(geoTag => geoTag.getName() !== name);
     }
 
     getNearbyGeoTags(latitude, longitude, radius) {
+        // Algorithim that finds all GeoTags from the store, that are in the proximite of the current user's location.
         console.log("GetNearbyGeoTags lat: " + latitude + " long: " + longitude + " rad: " + radius);
 
         let nearbyGeoTags = [];
@@ -59,6 +39,7 @@ class InMemoryGeoTagStore{
     }
 
     searchNearbyGeoTags(latitude, longitude, radius, keyword) {
+        // Searchmethod for getting an array of GeoTags from the store, that are in in the proximity of a location that match a keyword.
         console.log("SearchNearbyGeoTags lat: " + latitude + " long: " + longitude + " rad: " + radius + " key: " + keyword);
 
         let nearbyGeoTags = this.getNearbyGeoTags(latitude, longitude, radius);
@@ -67,6 +48,7 @@ class InMemoryGeoTagStore{
     }
 
     getGeoTagsBySearchterm(searchterm, store = this._geoTags) {
+        // Searchmethod for getting an array of GeoTgas only by a keyword.
         console.log("Get Geotags by searchterm: " + searchterm);
 
         let geoTagStore = [];
@@ -88,6 +70,8 @@ class InMemoryGeoTagStore{
     }
 
     generateFreshIds() {
+        // Method, that generates fresh IDs for all GeoTags.
+        // And it checks, that there are no double IDs.
         for (let i = 0; i < this._geoTags.length; i++) {
             if (this._geoTags[i].getId() === undefined ||
                 this._geoTags[i].getId() !== i) {
@@ -97,7 +81,7 @@ class InMemoryGeoTagStore{
     }
 
     getGeoTagById(id) {
-
+        // Returns a GeoTag with a givin ID.
         for (let i = 0; i < this._geoTags.length; i++) {
             if (this._geoTags[i].getId() === id) {
                 return this._geoTags[i];
@@ -106,6 +90,7 @@ class InMemoryGeoTagStore{
     }
 
     updateGeoTag(id, name, latitude, longitude, hashtag) {
+        // Overwrites a GeoTag with new data by ID.
         const geoTag = this.getGeoTagById(id);
     
         if (geoTag) {
@@ -120,16 +105,17 @@ class InMemoryGeoTagStore{
         return null;
       }
     
-      deleteGeoTag(id) {
+    deleteGeoTag(id) {
+        // Deletes a GeoTag from the store by ID.
         const geoTagIndex = this._geoTags.findIndex(geoTag => geoTag.getId() === id);
-    
+
         if (geoTagIndex !== -1) {
-          const deletedGeoTag = this._geoTags.splice(geoTagIndex, 1)[0];
-          return deletedGeoTag;
+            const deletedGeoTag = this._geoTags.splice(geoTagIndex, 1)[0];
+            return deletedGeoTag;
         }
-    
+
         return null;
-      }
+    }
 
     dist(lat1, lon1, lat2, lon2) {
         // Calculaition of the distance concidering the curvature of the earth.
@@ -146,11 +132,8 @@ class InMemoryGeoTagStore{
     }  
 
     getAllGeoTags() {
-        let allGeoTags = [];
-        for (let i = 0; i < this._geoTags.length; i++) {
-            allGeoTags.push(this._geoTags[i]);
-        }
-        return allGeoTags;
+        // Returns the entire store.
+        return this._geoTags;
     }
 }
 

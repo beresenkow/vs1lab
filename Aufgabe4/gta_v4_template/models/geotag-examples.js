@@ -1,20 +1,10 @@
 // File origin: VS1LAB A3
 
-/**
- * This script is a template for exercise VS1lab/Aufgabe3
- * Complete all TODOs in the code documentation.
- */
 const GeoTag = require('./geotag');
-/**
- * A class representing example geoTags at HKA
- * 
- * TODO: populate your InMemoryGeoTagStore with these tags
- * 
- */
+
 class GeoTagExamples {
-    /**
-     * Provides some geoTag data
-     */
+    // A class representing example geoTags at HKA
+    // Provides some geoTag data.
     static get tagList() {
         return [
             ['Castle', 49.013790, 8.404435, '#sight'],
@@ -32,6 +22,7 @@ class GeoTagExamples {
     }
 
     static populateStore(geoTagStore) {
+        // Method that populates the store with the examples.
         const tags = this.tagList.map(tag => new GeoTag(tag[0], tag[1], tag[2], tag[3]));
         tags.forEach(tag => geoTagStore.addGeoTag(tag));
         return tags;

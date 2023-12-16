@@ -6,10 +6,7 @@
  * Complete all TODOs in the code documentation.
  */
 
-/**
- * Define module dependencies.
- */
-
+// Define module dependencies.
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -17,10 +14,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 
-/**
- * Set up Express app.
- */
-
+// Set up Express app.
 const app = express();
 
 // Set ejs as the view engine.
@@ -36,7 +30,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// TODO: ... your code here ...
+// Setup of static files.
 app.use(express.static(__dirname + '/public'));
 
 // Set dedicated script for routing

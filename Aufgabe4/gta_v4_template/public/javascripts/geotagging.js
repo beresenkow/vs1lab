@@ -8,7 +8,7 @@ import { LocationHelper } from './location-helper.js';
 import { MapManager } from "./map-manager.js";
 
 function updateLocation() {
-
+    // function that updates the users location.
     var taggingLatitudeInput = document.getElementById("latitude_tagging");
     var taggingLongitudeInput = document.getElementById("longitude_tagging");
     var discoveryLatitudeInput = document.getElementById("latitude_discovery");
@@ -18,6 +18,7 @@ function updateLocation() {
                       discoveryLatitudeInput.value && discoveryLongitudeInput.value; 
 
     if (!valuesExist) {
+        // Executes the LocationHelper only when it is required.
         LocationHelper.findLocation(function(helper) {
             taggingLatitudeInput.value = helper.latitude;
             taggingLongitudeInput.value = helper.longitude;
@@ -39,6 +40,7 @@ function updateLocation() {
 }
 
 function drawMap(latitude, longitude) {
+    // Generates a new Map-Image.
     var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
     var mapImage = document.getElementById("mapView");
     const tagsJson = mapImage.getAttribute('data-taglist');
