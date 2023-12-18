@@ -7,6 +7,9 @@
 import { LocationHelper } from './location-helper.js';
 import { MapManager } from "./map-manager.js";
 
+const addTagButton = document.getElementById("addTagButton");
+const discoveryButton = document.getElementById("discoveryButton");
+
 function updateLocation() {
     // function that updates the users location.
     var taggingLatitudeInput = document.getElementById("latitude_tagging");
@@ -45,10 +48,38 @@ function drawMap(latitude, longitude) {
     var mapImage = document.getElementById("mapView");
     const tagsJson = mapImage.getAttribute('data-taglist');
     const tags = JSON.parse(tagsJson);
+
     mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
 }
 
+
+addTagButton.addEventListener("submit", function (event) {
+    event.preventDefault();
+    let data = { 
+        name: document.getElementById("name").value,
+        latitude: document.getElementById("latitude_tagging").value,
+        longitude: document.getElementById("longitude_tagging").value,
+        hashtag: document.getElementById("hashtag").value
+    }
+
+    console.log("Haloop");
+    tagging(data).then(drawMap);
+});
+
+discoveryButton.addEventListener("submit", function (event) {
+    event.preventDefault();
+    let data = {
+        latitude_discovery: document.getElementById("latitude_discovery").value, 
+        longitude_discovery: document.getElementById("longitude_discovery").value,
+        searchterm: document.getElementById("searchterm")
+    }
+
+    console.log("Discovery");
+    discovery(data).then(drawMap);
+})
+
+
 // Wait for the page to fully load its DOM content, then call updateLocation
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {   
     updateLocation();
 });
