@@ -7,7 +7,7 @@
 import { LocationHelper } from './location-helper.js';
 import { MapManager } from "./map-manager.js";
 
-const addTagButton = document.getElementById("addTagButton");
+const taggingButton = document.getElementById("addTagButton");
 const discoveryButton = document.getElementById("discoveryButton");
 
 function updateLocation() {
@@ -37,9 +37,7 @@ function updateLocation() {
         drawMap(taggingLatitudeInput.value, taggingLongitudeInput.value);
 
         console.log("findLocation skipped.");
-    }
-
-    
+    } 
 }
 
 function drawMap(latitude, longitude) {
@@ -52,34 +50,62 @@ function drawMap(latitude, longitude) {
     mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
 }
 
+// Function to handle tagging form submission using AJAX
+function handleTaggingButton(event) {
+    event.preventDefault(); // Prevent the default form submission
 
-addTagButton.addEventListener("submit", function (event) {
-    event.preventDefault();
-    let data = { 
-        name: document.getElementById("name").value,
-        latitude: document.getElementById("latitude_tagging").value,
-        longitude: document.getElementById("longitude_tagging").value,
-        hashtag: document.getElementById("hashtag").value
-    }
+    const taggingForm = document.getElementById("taggingForm");
+    const formData = new FormData(taggingForm);
 
-    console.log("Haloop");
-    tagging(data).then(drawMap);
-});
+    // Create GeoTag object using the server-side GeoTag constructor
+    const geoTag = {
+        latitude_tagging: formData.get("latitude_tagging"),
+        longitude_tagging: formData.get("longitude_tagging"),
+        name: formData.get("name"),
+        hashtag: formData.get("hashtag"),
+    };
 
-discoveryButton.addEventListener("submit", function (event) {
-    event.preventDefault();
-    let data = {
-        latitude_discovery: document.getElementById("latitude_discovery").value, 
-        longitude_discovery: document.getElementById("longitude_discovery").value,
-        searchterm: document.getElementById("searchterm")
-    }
+    // Use Fetch API to send POST request with JSON payload
+    fetch('http://localhost:3000/api/geotags', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(geoTag),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle response data as needed
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
-    console.log("Discovery");
-    discovery(data).then(drawMap);
-})
+// Function to handle discovery form submission using AJAX
+function handleDiscoveryButton(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const discoveryForm = document.getElementById("discoveryForm");
+    const formData = new FormData(discoveryForm);
+
+    // Use Fetch API to send GET request with query parameters
+    const queryParams = new URLSearchParams(formData);
+    fetch(`http://localhost:3000/api/geotags/${queryParams.toString()}`)
+    .then(response => response.json())
+    .then(data => {
+        // Handle response data as needed
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+taggingButton.addEventListener("submit", handleTaggingButton);
+discoveryButton.addEventListener("submit", handleDiscoveryButton);
 
 
 // Wait for the page to fully load its DOM content, then call updateLocation
-document.addEventListener("DOMContentLoaded", () => {   
-    updateLocation();
-});
+document.addEventListener("DOMContentLoaded", updateLocation);
