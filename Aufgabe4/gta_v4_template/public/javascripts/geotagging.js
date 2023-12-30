@@ -83,7 +83,7 @@ taggingButton.addEventListener("submit", function (event) {
 
     console.log("Test");
 
-    tagging(geotag).then(updateMap2).then(updateList).then(updatePage);
+    tagging(geotag).then(drawMap);
 });
 
 // EventListener for the Discovery Submit Button
@@ -92,7 +92,7 @@ discoveryButton.addEventListener("submit", function (event) {
 
     let searchTerm = document.getElementById("searchterm").value;
 
-    discovery(searchTerm).then(updateMap2).then(updateList).then(updatePage).catch(error => alert("Search term does not exist"));
+    discovery(searchTerm).then(drawMap).catch(error => alert("Search term does not exist"));
 });
 
 // Wait for the page to fully load its DOM content, then call updateLocation
