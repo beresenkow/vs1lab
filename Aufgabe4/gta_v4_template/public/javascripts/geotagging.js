@@ -60,9 +60,9 @@ async function tagging(geotag){
     return await response.json();
 }
 
-// async function for the Discivery EventListener
+// async function for the Discovery EventListener
 async function discovery(searchInput){
-    let response = await fetch("http://localhost:3000/api/geotags" + searchInput,{
+    let response = await fetch("http://localhost:3000/api/geotags/" + searchInput,{
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
@@ -71,7 +71,7 @@ async function discovery(searchInput){
 }
 
 // EventListener for the Tagging Submit Button
-taggingButton.addEventListener("submit", function (event) {
+taggingButton.addEventListener("click", function (event) {
     event.preventDefault();// blocks default event handling
 
     let geotag = {
@@ -81,18 +81,23 @@ taggingButton.addEventListener("submit", function (event) {
         hashtag: document.getElementById("hashtag").value
     }
 
-    console.log("Test");
+    console.log("Following GeoTag added:");
+    console.log("Name: " + document.getElementById("name").value);
+    console.log("Lati: " + document.getElementById("latitude_tagging").value);
+    console.log("Long: " + document.getElementById("longitude_tagging").value);
+    console.log("Hash: " + document.getElementById("hashtag").value);
 
     tagging(geotag).then(drawMap);
 });
 
 // EventListener for the Discovery Submit Button
-discoveryButton.addEventListener("submit", function (event) {
+discoveryButton.addEventListener("click", function (event) {
     event.preventDefault();
 
     let searchTerm = document.getElementById("searchterm").value;
+    console.log("Trying to search for GeoTags that match the keyWord: " + searchTerm);
 
-    discovery(searchTerm).then(drawMap).catch(error => alert("Search term does not exist"));
+    discovery(searchTerm).then(drawMap).catch(error => alert("The entered Search Term does not match with any GeoTags"));
 });
 
 // Wait for the page to fully load its DOM content, then call updateLocation
