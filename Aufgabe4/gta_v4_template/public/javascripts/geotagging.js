@@ -50,62 +50,50 @@ function drawMap(latitude, longitude) {
     mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
 }
 
-// Function to handle tagging form submission using AJAX
-function handleTaggingButton(event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    const taggingForm = document.getElementById("taggingForm");
-    const formData = new FormData(taggingForm);
-
-    // Create GeoTag object using the server-side GeoTag constructor
-    const geoTag = {
-        latitude_tagging: formData.get("latitude_tagging"),
-        longitude_tagging: formData.get("longitude_tagging"),
-        name: formData.get("name"),
-        hashtag: formData.get("hashtag"),
-    };
-
-    // Use Fetch API to send POST request with JSON payload
-    fetch('http://localhost:3000/api/geotags', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(geoTag),
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Handle response data as needed
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
+// async function for the Tagging EventListener
+async function tagging(geotag){
+    let response = await fetch("http://localhost:3000/api/geotags", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(geotag),
     });
+    return await response.json();
 }
 
-// Function to handle discovery form submission using AJAX
-function handleDiscoveryButton(event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    const discoveryForm = document.getElementById("discoveryForm");
-    const formData = new FormData(discoveryForm);
-
-    // Use Fetch API to send GET request with query parameters
-    const queryParams = new URLSearchParams(formData);
-    fetch(`http://localhost:3000/api/geotags/${queryParams.toString()}`)
-    .then(response => response.json())
-    .then(data => {
-        // Handle response data as needed
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
+// async function for the Discivery EventListener
+async function discovery(searchInput){
+    let response = await fetch("http://localhost:3000/api/geotags" + searchInput,{
+        method: "GET",
+        headers: {"Content-Type": "application/json"}
     });
+    console.log(response);
+    return await response.json();
 }
 
-taggingButton.addEventListener("submit", handleTaggingButton);
-discoveryButton.addEventListener("submit", handleDiscoveryButton);
+// EventListener for the Tagging Submit Button
+taggingButton.addEventListener("submit", function (event) {
+    event.preventDefault();// blocks default event handling
 
+    let geotag = {
+        name: document.getElementById("name").value,
+        latitude: document.getElementById("latitude_tagging").value,
+        longitude: document.getElementById("longitude_tagging").value,
+        hashtag: document.getElementById("hashtag").value
+    }
+
+    console.log("Test");
+
+    tagging(geotag).then(updateMap2).then(updateList).then(updatePage);
+});
+
+// EventListener for the Discovery Submit Button
+discoveryButton.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    let searchTerm = document.getElementById("searchterm").value;
+
+    discovery(searchTerm).then(updateMap2).then(updateList).then(updatePage).catch(error => alert("Search term does not exist"));
+});
 
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", updateLocation);
