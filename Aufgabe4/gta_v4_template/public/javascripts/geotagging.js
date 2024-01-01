@@ -51,14 +51,15 @@ function drawMap(latitude, longitude) {
 }
 
 function drawMapWithGeotags(geotags) {
-    console.log("Geotags got at Map: " + JSON.parse(geotags));
+    console.log("Geotags got at Map: " + geotags);
+    
     var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
     var mapImage = document.getElementById("mapView");
 
     var latitude = parseFloat(document.getElementById("latitude_tagging").value);
     var longitude = parseFloat(document.getElementById("longitude_tagging").value);
 
-    mapImage.src = mapManager.getMapUrl(latitude, longitude,JSON.parse(geotags), 17);
+    mapImage.src = mapManager.getMapUrl(latitude, longitude, JSON.parse(geotags), 17);
     return geotags;
 }
 
