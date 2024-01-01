@@ -50,31 +50,70 @@ function drawMap(latitude, longitude) {
     mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
 }
 
+function drawMapWithGeotags(geotags) {
+    console.log("Geotags got at Map: " + JSON.parse(geotags));
+    var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
+    var mapImage = document.getElementById("mapView");
+
+    var latitude = parseFloat(document.getElementById("latitude_tagging").value);
+    var longitude = parseFloat(document.getElementById("longitude_tagging").value);
+
+    mapImage.src = mapManager.getMapUrl(latitude, longitude,JSON.parse(geotags), 17);
+    return geotags;
+}
+
+function updateList(geotags) {
+    console.log(geotags)
+    var list = JSON.parse(geotags);
+
+    var ul = document.getElementById("discoveryResults");
+    ul.innerHTML = "";
+    list. forEach(function (gtag) {
+        var li = document.createElement("li");
+        li.innerHTML = gtag.name + " (" + gtag.latitude + " ," + gtag.longitude + ") " + gtag.hashtag;
+        li.classList.add("geoTagElement");
+        ul.appendChild(li);
+    })
+    document.getElementById("name").value = "";
+    document.getElementById("hashtag").value = "";
+
+    return parseInt(document.getElementById("discoveryResults").innerHTML);
+}
+
 // async function for the Tagging EventListener
 async function tagging(geotag){
-    let response = await fetch("http://localhost:3000/api/geotags", {
+    var response = await fetch("http://localhost:3000/api/geotags", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(geotag),
     });
-    return await response.json();
+
+    console.log(response);
+    const jsonData = await response.json();
+    console.log(jsonData);
+    return jsonData;
+    //return await response.json();
 }
 
 // async function for the Discovery EventListener
 async function discovery(searchInput){
-    let response = await fetch("http://localhost:3000/api/geotags/" + searchInput,{
+    var response = await fetch("http://localhost:3000/api/geotags/" + searchInput,{
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
+
     console.log(response);
-    return await response.json();
+    const jsonData = await response.json();
+    console.log(jsonData);
+    return jsonData;
+    //return await response.json();
 }
 
 // EventListener for the Tagging Submit Button
 taggingButton.addEventListener("click", function (event) {
     event.preventDefault();// blocks default event handling
 
-    let geotag = {
+    var geotag = {
         name: document.getElementById("name").value,
         latitude: document.getElementById("latitude_tagging").value,
         longitude: document.getElementById("longitude_tagging").value,
@@ -87,17 +126,17 @@ taggingButton.addEventListener("click", function (event) {
     console.log("Long: " + document.getElementById("longitude_tagging").value);
     console.log("Hash: " + document.getElementById("hashtag").value);
 
-    tagging(geotag).then(drawMap);
+    tagging(geotag).then(drawMapWithGeotags).then(updateList);
 });
 
 // EventListener for the Discovery Submit Button
 discoveryButton.addEventListener("click", function (event) {
     event.preventDefault();
 
-    let searchTerm = document.getElementById("searchterm").value;
+    var searchTerm = document.getElementById("searchterm").value;
     console.log("Trying to search for GeoTags that match the keyWord: " + searchTerm);
 
-    discovery(searchTerm).then(drawMap).catch(error => alert("The entered Search Term does not match with any GeoTags"));
+    discovery(searchTerm).then(drawMapWithGeotags).then(updateList)//.catch(error => alert("The entered Search Term does not match with any GeoTags"));
 });
 
 // Wait for the page to fully load its DOM content, then call updateLocation
