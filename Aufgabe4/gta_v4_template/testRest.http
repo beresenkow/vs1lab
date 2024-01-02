@@ -7,8 +7,8 @@ Content-Type: application/json
 
 { 
     "name": "New Place", 
-    "latitude": 40.7128, 
-    "longitude": -74.0060,
+    "latitude": 48.88838, 
+    "longitude": 8.7008,
     "hashtag": "#NewPlace"
 }
 
@@ -18,8 +18,8 @@ get http://localhost:3000/api/geotags
 Content-Type: application/json
 
 {
-    "latitude_discovery": 40.7128, 
-    "longitude_discovery": -74.0060, 
+    "latitude_discovery": 48.88838, 
+    "longitude_discovery": 8.7008, 
     "searchterm": "New"
 }
 
@@ -34,8 +34,8 @@ Content-Type: application/json
 
 {
     "name": "Updated Place", 
-    "latitude": 41.8781, 
-    "longitude": -87.6298, 
+    "latitude": 48.18838, 
+    "longitude": 8.9008, 
     "hashtag": "#UpdatedPlace"
 }
 

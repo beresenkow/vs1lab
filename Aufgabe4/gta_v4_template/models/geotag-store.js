@@ -17,7 +17,7 @@ class InMemoryGeoTagStore{
 
     removeGeoTag(name) {
         // Method for removing of a existing GeoTag from the store by name.
-        this._geoTags = this._geoTags.filter(geoTag => geoTag.getName() !== name);
+        this._geoTags = this._geoTags.filter(geoTag => geoTag.name !== name);
     }
 
     getNearbyGeoTags(latitude, longitude, radius) {
@@ -28,7 +28,7 @@ class InMemoryGeoTagStore{
 
         for (let i = 0; i < this._geoTags.length; i++) {
             const currentTag = this._geoTags[i];
-            const distance = this.dist(latitude, longitude, currentTag.getLatitude(), currentTag.getLongitude());
+            const distance = this.dist(latitude, longitude, currentTag.latitude, currentTag.longitude);
 
             if (distance <= radius) {
                 nearbyGeoTags.push(this._geoTags[i]);
@@ -58,8 +58,8 @@ class InMemoryGeoTagStore{
         
         let foundGeoTags = [];
         for (let i = 0; i < geoTagStore.length; i++) {
-            const name = geoTagStore[i].getName();
-            const hashtag = geoTagStore[i].getHashtag();
+            const name = geoTagStore[i].name;
+            const hashtag = geoTagStore[i].hashtag;
 
             if (name !== undefined && name.includes(searchterm) ||
                 hashtag !== undefined && hashtag.includes(searchterm)) {
@@ -73,9 +73,9 @@ class InMemoryGeoTagStore{
         // Method, that generates fresh IDs for all GeoTags.
         // And it checks, that there are no double IDs.
         for (let i = 0; i < this._geoTags.length; i++) {
-            if (this._geoTags[i].getId() === undefined ||
-                this._geoTags[i].getId() !== i) {
-                this._geoTags[i].setId(i);
+            if (this._geoTags[i].id === undefined ||
+                this._geoTags[i].id !== i) {
+                this._geoTags[i].id = i;
             }
         }
     }
@@ -83,7 +83,7 @@ class InMemoryGeoTagStore{
     getGeoTagById(id) {
         // Returns a GeoTag with a givin ID.
         for (let i = 0; i < this._geoTags.length; i++) {
-            if (this._geoTags[i].getId() === id) {
+            if (this._geoTags[i].id === id) {
                 return this._geoTags[i];
             }
         }
@@ -94,10 +94,10 @@ class InMemoryGeoTagStore{
         const geoTag = this.getGeoTagById(id);
     
         if (geoTag) {
-          geoTag.setName(name);
-          geoTag.setLatitude(latitude);
-          geoTag.setLongitude(longitude);
-          geoTag.setHashtag(hashtag);
+          geoTag.name = name;
+          geoTag.latitude = latitude;
+          geoTag.longitude = longitude;
+          geoTag.hashtag = hashtag;
     
           return geoTag;
         }
@@ -107,7 +107,7 @@ class InMemoryGeoTagStore{
     
     deleteGeoTag(id) {
         // Deletes a GeoTag from the store by ID.
-        const geoTagIndex = this._geoTags.findIndex(geoTag => geoTag.getId() === id);
+        const geoTagIndex = this._geoTags.findIndex(geoTag => geoTag.id === id);
 
         if (geoTagIndex !== -1) {
             const deletedGeoTag = this._geoTags.splice(geoTagIndex, 1)[0];
@@ -135,6 +135,18 @@ class InMemoryGeoTagStore{
         // Returns the entire store.
         return this._geoTags;
     }
+
+    searchForInput(searchInput) {
+        let result = null;
+        if(this.isNumeric(searchInput)) {
+            result = this.getGeoTagById(searchInput);
+        }else if (this.isAllLetter(searchInput)) {
+            result = this.getGeoTagByName(searchInput);
+        }
+        return result;
+    }
+    isNumeric(value){return /^\d+$/.test(value);}
+    isAllLetter(string){return /^[A-Za-z]+$/.test(string);}
 }
 
 module.exports = InMemoryGeoTagStore

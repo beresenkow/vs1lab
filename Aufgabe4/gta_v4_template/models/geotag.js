@@ -1,54 +1,58 @@
 // File origin: VS1LAB A3
 
 class GeoTag {
+    #name      = "";
+    #hashtag   = "";
+    #longitude = 0;
+    #latitude  = 0;
+    #id        = 0;
 
-    constructor(name, latitude, longitude, hashtag, id) {
-        // constructor that creates a new GeoTag.
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.hashtag = hashtag;
-        this.id = id;
+    constructor(latitude,longitude,name,hashtag,id) {
+        this.#name = name;
+        this.#hashtag = hashtag;
+        this.#longitude = longitude;
+        this.#latitude = latitude;
+        this.#id = id;
     }
 
-    getName() {
-        return this.name;
+    toJSON() {
+        return {
+            id: this.#id,
+            name: this.#name,
+            latitude: this.#latitude,
+            longitude: this.#longitude,
+            hashtag: this.#hashtag
+        }
     }
-
-    setName(name) {
-        this.name = name;
+    get name() {
+        return this.#name;
     }
-
-    getLatitude() {
-        return this.latitude;
+    get hashtag() {
+        return this.#hashtag;
     }
-
-    setLatitude(latitude) {
-        this.latitude = latitude;
+    get latitude() {
+        return this.#latitude;
     }
-
-    getLongitude() {
-        return this.longitude;
+    get longitude() {
+        return this.#longitude;
     }
-
-    setLongitude(longitude) {
-        this.longitude = longitude;
+    get id() {
+        return this.#id;
     }
-
-    getHashtag() {
-        return this.hashtag;
+    set name(arg) {
+        this.#name = arg;
     }
-
-    setHashtag(hashtag) {
-        this.hashtag = hashtag;
+    set hashtag(arg) {
+        this.#hashtag = arg;
     }
-
-    getId() {
-        return this.id;
+    set latitude(arg) {
+        this.#latitude = arg;
     }
-
-    setId(id) {
-        this.id = id;
+    set longitude(arg) {
+        this.#longitude = arg;
+    }
+    set id(arg) {
+        this.#id = arg;
     }
 }
 

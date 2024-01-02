@@ -122,7 +122,7 @@ router.get('/api/geotags', (req, res) => {
   if (searchterm && searchterm !== "") {
     filteredGeoTags = filteredGeoTags.filter(
       geoTag =>
-        geoTag.getName().includes(searchterm) || geoTag.getHashtag().includes(searchterm)
+        geoTag.name.includes(searchterm) || geoTag.hashtag.includes(searchterm)
     );
   }
 
@@ -131,7 +131,7 @@ router.get('/api/geotags', (req, res) => {
     const longitude = parseFloat(longitude_discovery);
 
     filteredGeoTags = filteredGeoTags.filter(
-      geoTag => store.dist(latitude, longitude, geoTag.getLatitude(), geoTag.getLongitude()) <= 30
+      geoTag => store.dist(latitude, longitude, geoTag.latitude, geoTag.longitude) <= 30
     );
   }
 
@@ -158,7 +158,7 @@ router.post('/api/geotags', (req, res) => {
   store.addGeoTag(newGeoTag);
   store.generateFreshIds();
 
-  const location = `/api/geotags/${newGeoTag.getId()}`;
+  const location = `/api/geotags/${newGeoTag.id}`;
   res.location(location).status(201).json(newGeoTag);
 });
 
