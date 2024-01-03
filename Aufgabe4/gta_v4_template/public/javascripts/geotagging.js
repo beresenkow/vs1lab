@@ -59,8 +59,6 @@ function drawMap(latitude, longitude) {
     mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
 }
 
-
-
 function drawMapWithGeotags(geotags) {
     const mapImage = document.getElementById("mapView");
     
@@ -205,7 +203,7 @@ discoveryButton.addEventListener("click", function (event) {
     var searchTerm = document.getElementById("searchterm").value;
     console.log("Trying to search for GeoTags that match the keyWord: " + searchTerm);
 
-    discovery(searchTerm).then(drawMapWithGeotags).then(updateList).then(updatePage)//.catch(error => alert("The entered Search Term does not match with any GeoTags"));
+    discovery(searchTerm).then(drawMapWithGeotags).then(updateList).then(updatePage).catch(error => alert("The entered Search Term does not match with any GeoTags"));
 });
 
 prevButton.addEventListener("click", () => {

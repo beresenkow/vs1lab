@@ -91,7 +91,7 @@ router.post('/discovery', (req, res) => {
   const latitude = parseFloat(latitude_discovery);
   const longitude = parseFloat(longitude_discovery);
 
-  let discoverGeoTags = store.searchNearbyGeoTags(latitude, longitude, 30, searchterm);
+  var discoverGeoTags = store.searchNearbyGeoTags(latitude, longitude, 30, searchterm);
 
   res.render('index', { taglist: discoverGeoTags, latitude: latitude, longitude: longitude });
 });
@@ -117,7 +117,7 @@ module.exports = router;
 router.get('/api/geotags', (req, res) => {
   const { latitude_discovery, longitude_discovery, searchterm } = req.query;
 
-  let filteredGeoTags = store.getAllGeoTags();
+  var filteredGeoTags = store.getAllGeoTags();
 
   if (searchterm && searchterm !== "") {
     filteredGeoTags = filteredGeoTags.filter(
@@ -175,13 +175,39 @@ router.post('/api/geotags', (req, res) => {
 // TODO: ... your code here ...
 
 router.get('/api/geotags/:id', (req, res) => {
-  const geoTagId = req.params.id;
-  const geoTag = store.getGeoTagById(parseInt(geoTagId));
+  console.log("Transfered Id: " + req.params.id);
 
-  if (geoTag) {
-    res.json(geoTag);
-  } else {
-    res.status(404).json({ error: 'GeoTag not found' });
+  if (Number.isInteger(parseInt(req.params.id))) {
+    // if the id-parameter is an Integer, it means that we will
+    // search for the ID in our GeoTagStore.
+    console.log("Transfered ID is actually an ID.");
+    const geoTagId = req.params.id;
+    const geoTag = store.getGeoTagById(parseInt(geoTagId));
+
+    if (geoTag) {
+      res.json(geoTag);
+    } else {
+      res.status(404).send();
+    }
+  }
+  else {
+    // But if the id-parameter is not an Integer, the id will be
+    // The Searchterm from the Discovery-Field, and we will search
+    // for an array of GeoTags, that match the searchterm.
+    console.log("Transfered ID is actually a searchterm.");
+    const searchTerm = req.params.id;
+    var geotags = [];
+    geotags.push(store.getGeoTagsBySearchterm(searchTerm));
+    for (let i = 0; i < geotags.length; i++) {
+      geotags[i] = JSON.stringify(geotags[i]);
+    }
+    console.log("Found GeoTags by Searchterm: " + geotags);
+
+    if (geotags) {
+      res.json(geotags);
+    } else {
+      res.status(404).send();
+    }
   }
 });
 
