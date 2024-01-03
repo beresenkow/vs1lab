@@ -7,7 +7,7 @@ class GeoTag {
     #latitude  = 0;
     #id        = 0;
 
-    constructor(latitude,longitude,name,hashtag,id) {
+    constructor(name, latitude, longitude, hashtag, id) {
         this.#name = name;
         this.#hashtag = hashtag;
         this.#longitude = longitude;

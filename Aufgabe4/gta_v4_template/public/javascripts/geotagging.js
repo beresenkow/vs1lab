@@ -53,7 +53,7 @@ function drawMap(latitude, longitude) {
     // Generates a new Map-Image.
     var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
     const mapImage = document.getElementById("mapView");
-    const tagsJson = mapImage.getAttribute('data-taglist');
+    const tagsJson = mapImage.getAttribute("data-taglist");
     const tags = JSON.parse(tagsJson);
 
     mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
@@ -64,15 +64,16 @@ function drawMap(latitude, longitude) {
 function drawMapWithGeotags(geotags) {
     const mapImage = document.getElementById("mapView");
     
+    console.log("Geotags: " + geotags);
+    console.log("Already Used GeoTags: " + mapImage.getAttribute("data-taglist"));
 
     var latitude = parseFloat(document.getElementById("latitude_tagging").value);
     var longitude = parseFloat(document.getElementById("longitude_tagging").value);
-    console.log(latitude, longitude);
+    console.log("Current Location: " + latitude, longitude);
 
     var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
     
     mapImage.src = mapManager.getMapUrl(latitude, longitude, JSON.parse(geotags), 17);
-    console.log("Hallo updateMap2");
     return geotags;
 }
 
@@ -88,7 +89,7 @@ function updateList(geotags) {
     ul.innerHTML = "";
     list. forEach(function (gtag) {
         var li = document.createElement("li");
-        li.innerHTML = gtag.name + " (" + gtag.latitude + " ," + gtag.longitude + ") " + gtag.hashtag;
+        li.innerHTML = gtag.name + " (" + gtag.latitude + "," + gtag.longitude + ") " + gtag.hashtag;
         li.classList.add("geoTagElement");
         ul.appendChild(li);
     })

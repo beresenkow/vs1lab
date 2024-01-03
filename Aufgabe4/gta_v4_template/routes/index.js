@@ -158,8 +158,8 @@ router.post('/api/geotags', (req, res) => {
   store.addGeoTag(newGeoTag);
   store.generateFreshIds();
 
-  const location = `/api/geotags/${newGeoTag.id}`;
-  res.location(location).status(201).json(newGeoTag);
+  res.append('location',"/api/geotags/" + newGeoTag.id);
+  res.status(201).json(JSON.stringify(store.getAllGeoTags()));
 });
 
 /**
