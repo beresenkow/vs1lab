@@ -119,11 +119,13 @@ router.get('/api/geotags', (req, res) => {
 
   var filteredGeoTags = store.getAllGeoTags();
 
+  console.log(searchterm, latitude_discovery, longitude_discovery);
   if (searchterm && searchterm !== "") {
     filteredGeoTags = filteredGeoTags.filter(
-      geoTag =>
-        geoTag.name.includes(searchterm) || geoTag.hashtag.includes(searchterm)
+      geoTag => geoTag.name.includes(searchterm) || (geoTag.hashtag && geoTag.hashtag.includes(searchterm))
     );
+    res.json(filteredGeoTags);
+    return;
   }
 
   if (latitude_discovery && longitude_discovery) {
@@ -133,8 +135,9 @@ router.get('/api/geotags', (req, res) => {
     filteredGeoTags = filteredGeoTags.filter(
       geoTag => store.dist(latitude, longitude, geoTag.latitude, geoTag.longitude) <= 30
     );
+    res.json(filteredGeoTags);
+    return;
   }
-
   res.json(filteredGeoTags);
 });
 

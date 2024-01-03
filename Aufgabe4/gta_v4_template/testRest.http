@@ -14,17 +14,6 @@ Content-Type: application/json
 
 ###
 
-get http://localhost:3000/api/geotags
-Content-Type: application/json
-
-{
-    "latitude_discovery": 48.88838, 
-    "longitude_discovery": 8.7008, 
-    "searchterm": "New"
-}
-
-###
-
 get http://localhost:3000/api/geotags/12
 
 ###
