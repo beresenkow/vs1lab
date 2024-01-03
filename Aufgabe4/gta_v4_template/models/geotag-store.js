@@ -51,6 +51,10 @@ class InMemoryGeoTagStore{
         // Searchmethod for getting an array of GeoTgas only by a keyword.
         console.log("Get Geotags by searchterm: " + searchterm);
 
+        if (!this.validtaeString(searchterm)) {
+            return null;
+        }
+
         let geoTagStore = [];
         if (store !== undefined) {
             geoTagStore = store;
@@ -67,6 +71,10 @@ class InMemoryGeoTagStore{
                 }
         }
         return foundGeoTags;
+    }
+
+    validtaeString(string) {
+        return /^[A-Za-z]+$/.test(string);
     }
 
     generateFreshIds() {

@@ -154,11 +154,23 @@ router.get('/api/geotags', (req, res) => {
 router.post('/api/geotags', (req, res) => {
   const { name, latitude, longitude, hashtag } = req.body;
 
+  // Validation for name
+  if (!name || !/^[A-Z][a-zA-Z\s]*$/.test(name)) {
+    res.status(400).json({ error: "Invalid 'name' input. It must start with a capital letter and contain only letters." });
+    return;
+  }
+
+  // Validation for hashtag
+  if (hashtag && !/^#/.test(hashtag)) {
+    res.status(400).json({ error: "Invalid 'hashtag' input. If not empty, it should start with '#'." });
+    return;
+  }
+
   const newGeoTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag);
   store.addGeoTag(newGeoTag);
   store.generateFreshIds();
 
-  res.append('location',"/api/geotags/" + newGeoTag.id);
+  res.append('location', "/api/geotags/" + newGeoTag.id);
   res.status(201).json(JSON.stringify(store.getAllGeoTags()));
 });
 
@@ -230,6 +242,18 @@ router.get('/api/geotags/:id', (req, res) => {
 router.put('/api/geotags/:id', (req, res) => {
   const geoTagId = req.params.id;
   const { name, latitude, longitude, hashtag } = req.body;
+
+  // Validation for name
+  if (!name || !/^[A-Z][a-zA-Z\s]*$/.test(name)) {
+    res.status(400).json({ error: "Invalid 'name' input. It must start with a capital letter and contain only letters." });
+    return;
+  }
+
+  // Validation for hashtag
+  if (hashtag && !/^#/.test(hashtag)) {
+    res.status(400).json({ error: "Invalid 'hashtag' input. If not empty, it should start with '#'." });
+    return;
+  }
 
   const updatedGeoTag = store.updateGeoTag(parseInt(geoTagId), name, parseFloat(latitude), parseFloat(longitude), hashtag);
 
