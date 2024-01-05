@@ -222,13 +222,20 @@ label {
   display: block;
 }
 
-.discovery__taglist ul{
+.discovery__taglist ul {
   /* Removing of the Dots on the list elements */
   list-style-type: none;
 }
 
-.discovery__taglist li{
+.discovery__taglist li {
   /* Styling of the taglist list items */
+  background-color: gainsboro;
+  color: deepskyblue;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.pagination-button {
   background-color: gainsboro;
   color: deepskyblue;
   padding: 10px;
@@ -242,7 +249,7 @@ label {
   display: block;
 }
 
-.discovery__map img{
+.discovery__map img {
   max-width: 100%;
   max-height: 100%;
 }
