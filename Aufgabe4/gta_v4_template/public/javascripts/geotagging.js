@@ -85,7 +85,7 @@ function updateList(geotags) {
     ul.innerHTML = "";
     list. forEach(function (gtag) {
         var li = document.createElement("li");
-        li.innerHTML = gtag.name + " (" + gtag.latitude + "," + gtag.longitude + ") " + gtag.hashtag;
+        li.innerHTML = gtag.name + " (" + gtag.latitude + ", " + gtag.longitude + ") " + gtag.hashtag;
         li.classList.add("geoTagElement");
         ul.appendChild(li);
     })
