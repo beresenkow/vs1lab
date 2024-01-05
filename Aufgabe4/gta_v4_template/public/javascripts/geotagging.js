@@ -50,12 +50,10 @@ function updateLocation() {
 }
 
 function drawMap(latitude, longitude) {
-    // Generates a new Map-Image.
     var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
     const mapImage = document.getElementById("mapView");
     const tagsJson = mapImage.getAttribute("data-taglist");
-    const tags = JSON.parse(tagsJson);
-
+    let tags = JSON.parse(tagsJson);
     mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
 }
 
@@ -130,13 +128,29 @@ const retrieveListElements = (pageNum) => {
 
     const prevRange = (pageNum - 1) * paginationLimit;
     const currRange = pageNum * paginationLimit;
-    let Item = fetchPaginationTags(currentPage);
+    var Item = fetchPaginationTags(currentPage);
+
     listItems.forEach((item, index) => {
         item.classList.add("hidden");
         if (index >= prevRange && index < currRange) {
             item.classList.remove("hidden");
         }
     });
+
+    listItems.forEach((item, index) => {
+        if (item.classList.contains("hidden")) {
+            // If item is hidden, dont show it
+            item.style.display = 'none';
+        } else {
+            // If item is not hidden, show it
+            item.style.display = 'block';
+        }
+
+        if (index >= prevRange && index < currRange) {
+            item.style.display = 'block';
+        }
+    });
+
     console.log(Item);
 };
 
@@ -215,4 +229,4 @@ nextButton.addEventListener("click", () => {
 });
 
 // Wait for the page to fully load its DOM content, then call updateLocation
-document.addEventListener("DOMContentLoaded", updateLocation);
+document.addEventListener("DOMContentLoaded", updateLocation, retrieveListElements(currentPage));
