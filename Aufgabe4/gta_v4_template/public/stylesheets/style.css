@@ -242,6 +242,20 @@ label {
   margin-bottom: 15px;
 }
 
+.pagination-button:hover {
+  background-color: gainsboro;
+  color: darkblue;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.pagination-button:disabled {
+  background-color: gainsboro;
+  color: white;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
 /* Sizing of the map image */
 .discovery__map {
   max-width: 405px;
