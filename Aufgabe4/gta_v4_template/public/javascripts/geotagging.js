@@ -98,8 +98,8 @@ function updateList(geotags) {
 }
 
 const disableButton = (button) => {
-    button.classList.add("disabled");
-    button.setAttribute("disabled", true);
+    //button.classList.add("disabled");
+    //button.setAttribute("disabled", true);
 };
 
 const enableButton = (button) => {
@@ -127,32 +127,10 @@ const retrieveListElements = (pageNum) => {
     handlePageButtonsStatus();
     updatePageCount();
 
-    const prevRange = (pageNum - 1) * paginationLimit;
-    const currRange = pageNum * paginationLimit;
     var Item = fetchPaginationTags(currentPage);
 
-    listItems.forEach((item, index) => {
-        item.classList.add("hidden");
-        if (index >= prevRange && index < currRange) {
-            item.classList.remove("hidden");
-        }
-    });
-
-    listItems.forEach((item, index) => {
-        if (item.classList.contains("hidden")) {
-            // If item is hidden, dont show it
-            item.style.display = 'none';
-        } else {
-            // If item is not hidden, show it
-            item.style.display = 'block';
-        }
-
-        if (index >= prevRange && index < currRange) {
-            item.style.display = 'block';
-        }
-    });
-
-    console.log(Item);
+    console.log("Pagination Fetched", Item);
+    return Item;
 };
 
 function updatePageCount() {
@@ -190,10 +168,13 @@ async function discovery(searchInput){
 }
 
 async function fetchPaginationTags(page) {
-    let response = await fetch("http://localhost:3000/api/geotags/",{
+    let response = await fetch("http://localhost:3000/api/geotags/" + page,{
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
+
+    const geotags = await response.json();
+    return geotags;
 }
 
 // EventListener for the Tagging Submit Button
@@ -227,11 +208,11 @@ discoveryButton.addEventListener("click", function (event) {
 });
 
 prevButton.addEventListener("click", () => {
-    retrieveListElements(currentPage - 1);
+    retrieveListElements(currentPage - 1).then(updateList).then(updatePage);
 });
 
 nextButton.addEventListener("click", () => {
-    retrieveListElements(currentPage + 1);
+    retrieveListElements(currentPage + 1).then(updateList).then(updatePage);
 });
 
 // Wait for the page to fully load its DOM content, then call updateLocation

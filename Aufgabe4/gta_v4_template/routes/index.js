@@ -30,6 +30,8 @@ const store = new InMemoryGeoTagStore();
 
 const GeoTagExamples = require('../models/geotag-examples');
 const examples = new GeoTagExamples();
+var currentPage;
+const paginationLimit = 5;
 
 // App routes (A3)
 
@@ -173,8 +175,11 @@ router.post('/api/geotags', (req, res) => {
   store.addGeoTag(newGeoTag);
   store.generateFreshIds();
 
+  var paginatedGeoTags = []
+  paginatedGeoTags = paginateGeoTags(store.getAllGeoTags(), currentPage, paginationLimit);
+
   res.append('location', "/api/geotags/" + newGeoTag.id);
-  res.status(201).json(JSON.stringify(store.getAllGeoTags()));
+  res.status(201).json(JSON.stringify(paginatedGeoTags));
 });
 
 /**
@@ -196,8 +201,8 @@ router.get('/api/geotags/:id', (req, res) => {
     // if the id-parameter is an Integer, it means that we will
     // search for the ID in our GeoTagStore.
     console.log("Transfered ID is actually an ID.");
-    const geoTagId = req.params.id;
-    const geoTag = store.getGeoTagById(parseInt(geoTagId));
+    currentPage = req.params.id;
+    const geoTag = JSON.stringify(paginateGeoTags(store.getAllGeoTags(), currentPage, paginationLimit));
 
     if (geoTag) {
       res.json(geoTag);
@@ -213,18 +218,24 @@ router.get('/api/geotags/:id', (req, res) => {
     const searchTerm = req.params.id;
     var geotags = [];
     geotags.push(store.getGeoTagsBySearchterm(searchTerm));
-    for (let i = 0; i < geotags.length; i++) {
-      geotags[i] = JSON.stringify(geotags[i]);
-    }
-    console.log("Found GeoTags by Searchterm: " + geotags);
+    const paginatedGeoTags = paginateGeoTags(geotags, currentPage, paginationLimit);
+    console.log("Found GeoTags by Searchterm: " + JSON.stringify(geotags));
 
-    if (geotags) {
-      res.json(geotags);
+    if (paginatedGeoTags) {
+      res.json(JSON.stringify(paginatedGeoTags));
     } else {
       res.status(404).send();
     }
   }
 });
+
+function paginateGeoTags(geotags, page, pageSize) {
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  const paginatedGeoTags = geotags.slice(startIndex, endIndex);
+  return paginatedGeoTags;
+}
 
 /**
  * Route '/api/geotags/:id' for HTTP 'PUT' requests.
