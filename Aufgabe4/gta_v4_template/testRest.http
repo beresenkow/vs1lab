@@ -29,4 +29,4 @@ Content-Type: application/json
 }
 
 ###
-delete http://localhost:3000/api/geotags/12
+delete http://localhost:3000/api/geotags/59

@@ -125,6 +125,7 @@ const retrieveListElements = (pageNum) => {
     currentPage = pageNum;
 
     handlePageButtonsStatus();
+    updatePageCount();
 
     const prevRange = (pageNum - 1) * paginationLimit;
     const currRange = pageNum * paginationLimit;
@@ -153,6 +154,11 @@ const retrieveListElements = (pageNum) => {
 
     console.log(Item);
 };
+
+function updatePageCount() {
+    const pageCountElement = document.getElementById("pageCount");
+    pageCountElement.textContent = `${currentPage} / ${pageCount}`;
+}
 
 function updatePage(){
     pageCount = Math.ceil(listItems.length / paginationLimit);

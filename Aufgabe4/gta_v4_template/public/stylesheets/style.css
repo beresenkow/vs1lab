@@ -235,6 +235,18 @@ label {
   margin-bottom: 15px;
 }
 
+.pagination-container {
+  display: flex;
+  align-items: center;
+}
+
+.pageCount {
+  padding: 7px;
+  margin-bottom: 12px;
+  font-size: larger;
+  font-style: oblique;
+}
+
 .pagination-button {
   background-color: gainsboro;
   color: deepskyblue;
