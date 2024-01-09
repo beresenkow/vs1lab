@@ -15,9 +15,10 @@ const nextButton = document.getElementById("next-button");
 const prevButton = document.getElementById("prev-button");
 const paginationLimit = 5;
 
-let listItems = paginatedList.querySelectorAll("li");
-let pageCount = Math.ceil(listItems.length / paginationLimit);
-let currentPage = 1;
+var listItems = paginatedList.querySelectorAll("li");
+var pageCount = Math.ceil(listItems.length / paginationLimit);
+var currentPage = 1;
+var totalGeoTags = 11;
 
 function updateLocation() {
     // function that updates the users location.
@@ -83,11 +84,17 @@ function updateList(geotags) {
 
     var ul = document.getElementById("discoveryResults");
     ul.innerHTML = "";
-    list. forEach(function (gtag) {
-        var li = document.createElement("li");
-        li.innerHTML = gtag.name + " (" + gtag.latitude + ", " + gtag.longitude + ") " + gtag.hashtag;
-        li.classList.add("geoTagElement");
-        ul.appendChild(li);
+    list.forEach(function (gtag) {
+        if (gtag) {
+            var li = document.createElement("li");
+            li.innerHTML = gtag.name + " (" + gtag.latitude + ", " + gtag.longitude + ") " + gtag.hashtag;
+            li.classList.add("geoTagElement");
+            ul.appendChild(li);
+        } else {
+            var li = document.createElement("li");
+            li.classList.add("hidden");
+            ul.appendChild(li);
+        }
     })
     document.getElementById("name").value = "";
     document.getElementById("hashtag").value = "";
@@ -98,8 +105,8 @@ function updateList(geotags) {
 }
 
 const disableButton = (button) => {
-    //button.classList.add("disabled");
-    //button.setAttribute("disabled", true);
+    button.classList.add("disabled");
+    button.setAttribute("disabled", true);
 };
 
 const enableButton = (button) => {
@@ -135,18 +142,19 @@ const retrieveListElements = (pageNum) => {
 
 function updatePageCount() {
     const pageCountElement = document.getElementById("pageCount");
-    pageCountElement.textContent = `${currentPage} / ${pageCount}`;
+    pageCountElement.textContent = `${currentPage} / ${pageCount} (${totalGeoTags})`;
 }
 
 function updatePage(){
     pageCount = Math.ceil(listItems.length / paginationLimit);
+    totalGeoTags = listItems.length;
     retrieveListElements(currentPage);
 }
 
 // async function for the Tagging EventListener
 async function tagging(geotag){
     console.log(geotag);
-    let response = await fetch("http://localhost:3000/api/geotags", {
+    var response = await fetch("http://localhost:3000/api/geotags", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(geotag)
@@ -158,7 +166,7 @@ async function tagging(geotag){
 
 // async function for the Discovery EventListener
 async function discovery(searchInput){
-    let response = await fetch("http://localhost:3000/api/geotags/" + searchInput,{
+    var response = await fetch("http://localhost:3000/api/geotags/" + searchInput,{
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
@@ -168,13 +176,12 @@ async function discovery(searchInput){
 }
 
 async function fetchPaginationTags(page) {
-    let response = await fetch("http://localhost:3000/api/geotags/" + page,{
+    var response = await fetch("http://localhost:3000/api/geotags/" + page,{
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
 
-    const geotags = await response.json();
-    return geotags;
+    return await response.json();
 }
 
 // EventListener for the Tagging Submit Button
@@ -201,6 +208,8 @@ taggingButton.addEventListener("click", function (event) {
 discoveryButton.addEventListener("click", function (event) {
     event.preventDefault();
 
+    currentPage = 1;
+    updatePageCount();
     var searchTerm = document.getElementById("searchterm").value;
     console.log("Trying to search for GeoTags that match the keyWord: " + searchTerm);
 
@@ -208,12 +217,12 @@ discoveryButton.addEventListener("click", function (event) {
 });
 
 prevButton.addEventListener("click", () => {
-    retrieveListElements(currentPage - 1).then(updateList).then(updatePage);
+    retrieveListElements(currentPage - 1).then(updateList).then(updatePage)//.then(drawMapWithGeotags);
 });
 
 nextButton.addEventListener("click", () => {
-    retrieveListElements(currentPage + 1).then(updateList).then(updatePage);
+    retrieveListElements(currentPage + 1).then(updateList).then(updatePage)//.then(drawMapWithGeotags);
 });
 
 // Wait for the page to fully load its DOM content, then call updateLocation
-document.addEventListener("DOMContentLoaded", updateLocation, retrieveListElements(currentPage));
+document.addEventListener("DOMContentLoaded", updateLocation, retrieveListElements(currentPage).then(updateList).then(updatePage));//.then(drawMapWithGeotags));

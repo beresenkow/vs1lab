@@ -198,8 +198,8 @@ router.get('/api/geotags/:id', (req, res) => {
   console.log("Transfered Id: " + req.params.id);
 
   if (Number.isInteger(parseInt(req.params.id))) {
-    // if the id-parameter is an Integer, it means that we will
-    // search for the ID in our GeoTagStore.
+    // if the id-parameter is an Integer, it means that the page
+    // was changed.
     console.log("Transfered ID is actually an ID.");
     currentPage = req.params.id;
     const geoTag = JSON.stringify(paginateGeoTags(store.getAllGeoTags(), currentPage, paginationLimit));
@@ -218,8 +218,8 @@ router.get('/api/geotags/:id', (req, res) => {
     const searchTerm = req.params.id;
     var geotags = [];
     geotags.push(store.getGeoTagsBySearchterm(searchTerm));
-    const paginatedGeoTags = paginateGeoTags(geotags, currentPage, paginationLimit);
-    console.log("Found GeoTags by Searchterm: " + JSON.stringify(geotags));
+    const paginatedGeoTags = paginateGeoTags(geotags, 1, paginationLimit);
+    console.log("Found GeoTags by Searchterm: " + JSON.stringify(paginatedGeoTags));
 
     if (paginatedGeoTags) {
       res.json(JSON.stringify(paginatedGeoTags));
@@ -233,8 +233,16 @@ function paginateGeoTags(geotags, page, pageSize) {
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
-  const paginatedGeoTags = geotags.slice(startIndex, endIndex);
-  return paginatedGeoTags;
+  var geotagsCopy = new Array(geotags.length);
+  geotags.forEach((item, index) => {
+    if (index >= startIndex && index < endIndex) {
+      geotagsCopy[index] = item;
+    } else {
+      geotagsCopy[index] = undefined;
+    }
+  });
+  console.log(geotagsCopy);
+  return geotagsCopy;
 }
 
 /**
