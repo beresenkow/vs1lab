@@ -7,18 +7,23 @@
 import { LocationHelper } from './location-helper.js';
 import { MapManager } from "./map-manager.js";
 
+// WidgetButton variables.
 const taggingButton = document.getElementById("addTagButton");
 const discoveryButton = document.getElementById("discoveryButton");
 
+// Pagination related variables.
 const paginatedList = document.getElementById("discoveryResults");
 const nextButton = document.getElementById("next-button");
 const prevButton = document.getElementById("prev-button");
 const paginationLimit = 5;
 
+// GeotagCount related variables.
 var listItems = paginatedList.querySelectorAll("li");
 var pageCount = Math.ceil(listItems.length / paginationLimit);
 var currentPage = 1;
 var totalGeoTags = 11;
+
+const mapImage = document.getElementById("mapView");
 
 function updateLocation() {
     // function that updates the users location.
@@ -51,62 +56,61 @@ function updateLocation() {
 }
 
 function drawMap(latitude, longitude) {
+    // function for rendering the map with geotags recived from 
+    // the data-taglist in the html.
+    console.log("Current Location: ", latitude, longitude);
+
     var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
-    const mapImage = document.getElementById("mapView");
     const tagsJson = mapImage.getAttribute("data-taglist");
     let tags = JSON.parse(tagsJson);
     mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
 }
 
 function drawMapWithGeotags(geotags) {
-    const mapImage = document.getElementById("mapView");
-    
-    console.log("Geotags Draw Map with Geotags: " + geotags);
-    //console.log("Already Used GeoTags: " + mapImage.getAttribute("data-taglist"));
-
-    var latitude = parseFloat(document.getElementById("latitude_tagging").value);
-    var longitude = parseFloat(document.getElementById("longitude_tagging").value);
-    console.log("Current Location: " + latitude, longitude);
+    // function for rendering the map with geotags recived from the various Routes.
+    console.log("Geotags: " + geotags);
 
     var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
-    
+    var latitude = parseFloat(document.getElementById("latitude_tagging").value);
+    var longitude = parseFloat(document.getElementById("longitude_tagging").value);
+
     mapImage.src = mapManager.getMapUrl(latitude, longitude, JSON.parse(geotags), 17);
     return geotags;
 }
 
 function updateList(geotags) {
+    // function that creates new listelements for the displayed geotags.
     if (!geotags) {
+        // if ther are no geotags then return.
         console.log("Geotag is undefined or null.");
-        return Promise.resolve(); // Resolve the promise without processing further
+        return Promise.resolve();
     }
 
-    console.log("Geotags Update List: " + geotags);
-
     var list = JSON.parse(geotags);
-    console.log("parsed geotags: ", list);
     var ul = document.getElementById("discoveryResults");
+
     ul.innerHTML = "";
     list.forEach(function (gtag) {
+        // Loop that creates li-elemtns for all geotags recived from the server.
         if (gtag) {
             console.log(gtag);
             var li = document.createElement("li");
             li.innerHTML = gtag.name + " (" + gtag.latitude + ", " + gtag.longitude + ") " + gtag.hashtag;
             li.classList.add("geoTagElement");
             ul.appendChild(li);
-        } else {
-            var li = document.createElement("li");
-            li.classList.add("hidden");
-            ul.appendChild(li);
         }
     })
+
     document.getElementById("name").value = "";
     document.getElementById("hashtag").value = "";
 
+    totalGeoTags = list.length;
     listItems = paginatedList.querySelectorAll("li");
 
     return parseInt(document.getElementById("discoveryResults").innerHTML);
 }
 
+// functions that disable the pagination buttons when required.
 const disableButton = (button) => {
     button.classList.add("disabled");
     button.setAttribute("disabled", true);
@@ -131,28 +135,28 @@ const handlePageButtonsStatus = () => {
     }
 };
 
-const retrieveListElements = (pageNum) => {
-    currentPage = pageNum;
-
-    handlePageButtonsStatus();
-    updatePageCount();
-
-    var Item = fetchPaginationTags(currentPage);
-
-    console.log("Pagination Fetched", Item);
-    return Item;
-};
-
+// functions that are responsible for the display of the page count.
 function updatePageCount() {
     const pageCountElement = document.getElementById("pageCount");
     pageCountElement.textContent = `${currentPage} / ${pageCount} (${totalGeoTags})`;
 }
 
 function updatePage(){
-    pageCount = Math.ceil(listItems.length / paginationLimit);
-    totalGeoTags = listItems.length;
+    pageCount = Math.ceil(totalGeoTags / paginationLimit);
     retrieveListElements(currentPage);
 }
+
+const retrieveListElements = (pageNum) => {
+    // function that handels the pagination status.
+    currentPage = pageNum;
+
+    handlePageButtonsStatus();
+    updatePageCount();
+
+    var Item = fetchPaginationTags(currentPage);
+    console.log("Pagination Fetched", Item);
+    return Item;
+};
 
 // async function for the Tagging EventListener
 async function tagging(geotag){
@@ -178,6 +182,7 @@ async function discovery(searchInput){
     return await response.json();
 }
 
+// async function for the Pagination EventListener
 async function fetchPaginationTags(page) {
     var response = await fetch("http://localhost:3000/api/geotags/" + page,{
         method: "GET",
@@ -221,6 +226,7 @@ discoveryButton.addEventListener("click", function (event) {
     discovery(searchTerm).then(drawMapWithGeotags).then(updateList).then(updatePage);
 });
 
+// EventListeners for the Pagination Click Buttons.
 prevButton.addEventListener("click", () => {
     retrieveListElements(currentPage - 1).then(updateList).then(updatePage);
 });

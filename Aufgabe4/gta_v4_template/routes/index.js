@@ -164,10 +164,10 @@ router.post('/api/geotags', (req, res) => {
   const { name, latitude, longitude, hashtag } = req.body;
 
   // Validation for name
-  if (!name || !/^[A-Z][a-zA-Z\s]*$/.test(name)) {
-    res.status(400).json({ error: "Invalid 'name' input. It must start with a capital letter and contain only letters." });
+  if (!name || !/^[A-ZÄÖÜa-zäöüß\s][a-zA-ZÄÖÜäöüß\s]*$/.test(name)) {
+    res.status(400).json({ error: "Invalid 'name' input. It must start with a capital letter and contain only letters, including German special characters (ä, ö, ü, ß)." });
     return;
-  }
+}
 
   // Validation for hashtag
   if (hashtag && !/^#/.test(hashtag)) {
@@ -227,14 +227,18 @@ router.get('/api/geotags/:id', (req, res) => {
     }
   }
   else {
+    console.log("Transfered ID is actually a searchterm.");
     // But if the id-parameter is not an Integer, the id will be
     // The Searchterm from the Discovery-Field, and we will search
     // for an array of GeoTags, that match the searchterm.
 
-    console.log("Transfered ID is actually a searchterm.");
-
     const searchTerm = req.params.id;
-    var geotags = store.getGeoTagsBySearchterm(searchTerm);
+    var geotags = [];
+    if (searchTerm === "") {
+      geotags = store.getAllGeoTags();
+    } else {
+      geotags = store.getGeoTagsBySearchterm(searchTerm);
+    }
     const paginatedGeoTags = paginateGeoTags(geotags, 1, paginationLimit);
 
     currentSearchterm = searchTerm;
@@ -249,6 +253,7 @@ router.get('/api/geotags/:id', (req, res) => {
 });
 
 function paginateGeoTags(geotags, page, pageSize) {
+  // Pagination logic.
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
@@ -261,6 +266,8 @@ function paginateGeoTags(geotags, page, pageSize) {
     }
   });
   console.log(geotagsCopy);
+  // function returns an array that only contains the requested Geotags
+  // in regards for the paginationLimit (Default: 5 Geotags).
   return geotagsCopy;
 }
 
@@ -330,7 +337,3 @@ router.delete('/api/geotags/:id', (req, res) => {
 });
 
 module.exports = router;
-
-
-// cd Aufgabe4/gta_4_template
-// npm start
