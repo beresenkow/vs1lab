@@ -30,8 +30,12 @@ const store = new InMemoryGeoTagStore();
 
 const GeoTagExamples = require('../models/geotag-examples');
 const examples = new GeoTagExamples();
-var currentPage;
+
+
 const paginationLimit = 5;
+var currentPage;
+var currentSearchterm;
+var foundGeoTags = [];
 
 // App routes (A3)
 
@@ -178,6 +182,9 @@ router.post('/api/geotags', (req, res) => {
   var paginatedGeoTags = []
   paginatedGeoTags = paginateGeoTags(store.getAllGeoTags(), currentPage, paginationLimit);
 
+  foundGeoTags = [];
+  currentSearchterm = "";
+
   res.append('location', "/api/geotags/" + newGeoTag.id);
   res.status(201).json(JSON.stringify(paginatedGeoTags));
 });
@@ -198,14 +205,23 @@ router.get('/api/geotags/:id', (req, res) => {
   console.log("Transfered Id: " + req.params.id);
 
   if (Number.isInteger(parseInt(req.params.id))) {
-    // if the id-parameter is an Integer, it means that the page
-    // was changed.
-    console.log("Transfered ID is actually an ID.");
-    currentPage = req.params.id;
-    const geoTag = JSON.stringify(paginateGeoTags(store.getAllGeoTags(), currentPage, paginationLimit));
+    // if the id-parameter is an Integer, it means that the page was changed.
 
-    if (geoTag) {
-      res.json(geoTag);
+    console.log("Transfered ID is actually an ID.");
+
+    currentPage = req.params.id;
+    var geotags = [];
+
+    // Checks, if the array with searched geotags is filled, because then
+    // that array will be prioritized over the store.
+    if (foundGeoTags.length > paginationLimit) {
+      geotags = JSON.stringify(paginateGeoTags(foundGeoTags, currentPage, paginationLimit))
+    } else {
+      geotags = JSON.stringify(paginateGeoTags(store.getAllGeoTags(), currentPage, paginationLimit));
+    }
+
+    if (geotags) {
+      res.json(geotags);
     } else {
       res.status(404).send();
     }
@@ -214,10 +230,15 @@ router.get('/api/geotags/:id', (req, res) => {
     // But if the id-parameter is not an Integer, the id will be
     // The Searchterm from the Discovery-Field, and we will search
     // for an array of GeoTags, that match the searchterm.
+
     console.log("Transfered ID is actually a searchterm.");
+
     const searchTerm = req.params.id;
     var geotags = store.getGeoTagsBySearchterm(searchTerm);
     const paginatedGeoTags = paginateGeoTags(geotags, 1, paginationLimit);
+
+    currentSearchterm = searchTerm;
+    foundGeoTags = geotags;
 
     if (paginatedGeoTags) {
       res.json(JSON.stringify(paginatedGeoTags));

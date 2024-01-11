@@ -204,6 +204,8 @@ taggingButton.addEventListener("click", function (event) {
     console.log("Long: " + document.getElementById("longitude_tagging").value);
     console.log("Hash: " + document.getElementById("hashtag").value);
 
+    document.getElementById("searchterm").value = "";
+
     tagging(geotag).then(drawMapWithGeotags).then(updateList).then(updatePage);
 });
 
