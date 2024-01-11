@@ -61,8 +61,8 @@ function drawMap(latitude, longitude) {
 function drawMapWithGeotags(geotags) {
     const mapImage = document.getElementById("mapView");
     
-    console.log("Geotags: " + geotags);
-    console.log("Already Used GeoTags: " + mapImage.getAttribute("data-taglist"));
+    console.log("Geotags Draw Map with Geotags: " + geotags);
+    //console.log("Already Used GeoTags: " + mapImage.getAttribute("data-taglist"));
 
     var latitude = parseFloat(document.getElementById("latitude_tagging").value);
     var longitude = parseFloat(document.getElementById("longitude_tagging").value);
@@ -80,12 +80,15 @@ function updateList(geotags) {
         return Promise.resolve(); // Resolve the promise without processing further
     }
 
-    var list = JSON.parse(geotags);
+    console.log("Geotags Update List: " + geotags);
 
+    var list = JSON.parse(geotags);
+    console.log("parsed geotags: ", list);
     var ul = document.getElementById("discoveryResults");
     ul.innerHTML = "";
     list.forEach(function (gtag) {
         if (gtag) {
+            console.log(gtag);
             var li = document.createElement("li");
             li.innerHTML = gtag.name + " (" + gtag.latitude + ", " + gtag.longitude + ") " + gtag.hashtag;
             li.classList.add("geoTagElement");
@@ -213,16 +216,16 @@ discoveryButton.addEventListener("click", function (event) {
     var searchTerm = document.getElementById("searchterm").value;
     console.log("Trying to search for GeoTags that match the keyWord: " + searchTerm);
 
-    discovery(searchTerm).then(drawMapWithGeotags).then(updateList).then(updatePage).catch(error => alert("The entered Search Term does not match with any GeoTags"));
+    discovery(searchTerm).then(drawMapWithGeotags).then(updateList).then(updatePage);
 });
 
 prevButton.addEventListener("click", () => {
-    retrieveListElements(currentPage - 1).then(updateList).then(updatePage)//.then(drawMapWithGeotags);
+    retrieveListElements(currentPage - 1).then(updateList).then(updatePage);
 });
 
 nextButton.addEventListener("click", () => {
-    retrieveListElements(currentPage + 1).then(updateList).then(updatePage)//.then(drawMapWithGeotags);
+    retrieveListElements(currentPage + 1).then(updateList).then(updatePage);
 });
 
 // Wait for the page to fully load its DOM content, then call updateLocation
-document.addEventListener("DOMContentLoaded", updateLocation, retrieveListElements(currentPage).then(updateList).then(updatePage));//.then(drawMapWithGeotags));
+document.addEventListener("DOMContentLoaded", updateLocation, retrieveListElements(currentPage).then(updateList).then(updatePage));

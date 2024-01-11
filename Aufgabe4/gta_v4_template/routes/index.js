@@ -216,10 +216,8 @@ router.get('/api/geotags/:id', (req, res) => {
     // for an array of GeoTags, that match the searchterm.
     console.log("Transfered ID is actually a searchterm.");
     const searchTerm = req.params.id;
-    var geotags = [];
-    geotags.push(store.getGeoTagsBySearchterm(searchTerm));
+    var geotags = store.getGeoTagsBySearchterm(searchTerm);
     const paginatedGeoTags = paginateGeoTags(geotags, 1, paginationLimit);
-    console.log("Found GeoTags by Searchterm: " + JSON.stringify(paginatedGeoTags));
 
     if (paginatedGeoTags) {
       res.json(JSON.stringify(paginatedGeoTags));
