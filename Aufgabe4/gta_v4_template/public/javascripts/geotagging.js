@@ -63,7 +63,7 @@ function drawMap(latitude, longitude) {
     var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
     const tagsJson = mapImage.getAttribute("data-taglist");
     let tags = JSON.parse(tagsJson);
-    mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
+    mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 10);
 }
 
 function drawMapWithGeotags(geotags) {
@@ -74,7 +74,7 @@ function drawMapWithGeotags(geotags) {
     var latitude = parseFloat(document.getElementById("latitude_tagging").value);
     var longitude = parseFloat(document.getElementById("longitude_tagging").value);
 
-    mapImage.src = mapManager.getMapUrl(latitude, longitude, JSON.parse(geotags), 17);
+    mapImage.src = mapManager.getMapUrl(latitude, longitude, JSON.parse(geotags), 10);
     return geotags;
 }
 
@@ -228,11 +228,11 @@ discoveryButton.addEventListener("click", function (event) {
 
 // EventListeners for the Pagination Click Buttons.
 prevButton.addEventListener("click", () => {
-    retrieveListElements(currentPage - 1).then(updateList).then(updatePage);
+    retrieveListElements(currentPage - 1).then(drawMapWithGeotags).then(updateList).then(updatePage);
 });
 
 nextButton.addEventListener("click", () => {
-    retrieveListElements(currentPage + 1).then(updateList).then(updatePage);
+    retrieveListElements(currentPage + 1).then(drawMapWithGeotags).then(updateList).then(updatePage);
 });
 
 // Wait for the page to fully load its DOM content, then call updateLocation
