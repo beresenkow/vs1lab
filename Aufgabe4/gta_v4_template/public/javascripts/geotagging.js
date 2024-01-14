@@ -63,7 +63,7 @@ function drawMap(latitude, longitude) {
     var mapManager = new MapManager("FtWHGJMvdole3bKfpGDmCaVTIfY24EJj");
     const tagsJson = mapImage.getAttribute("data-taglist");
     let tags = JSON.parse(tagsJson);
-    mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 10);
+    mapImage.src = mapManager.getMapUrl(latitude, longitude, tags, 17);
 }
 
 function drawMapWithGeotags(geotags) {
@@ -74,7 +74,7 @@ function drawMapWithGeotags(geotags) {
     var latitude = parseFloat(document.getElementById("latitude_tagging").value);
     var longitude = parseFloat(document.getElementById("longitude_tagging").value);
 
-    mapImage.src = mapManager.getMapUrl(latitude, longitude, JSON.parse(geotags), 10);
+    mapImage.src = mapManager.getMapUrl(latitude, longitude, JSON.parse(geotags), 17);
     return geotags;
 }
 
